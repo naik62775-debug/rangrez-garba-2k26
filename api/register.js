@@ -50,7 +50,7 @@ module.exports = async function handler(req, res) {
     const amount = qty * 399;
 
     const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/registrations`,
+      `${SUPABASE_URL}/rest/v1/registration`,
       {
         method: "POST",
         headers: {
