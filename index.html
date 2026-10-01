@@ -783,8 +783,30 @@
 
         event.preventDefault();
 
-        alert(
-          "Payment system will be connected next."
+        const formData = new FormData(form);
+
+const response = await fetch("/api/register", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    fullName: formData.get("fullName"),
+    studentRegNo: formData.get("studentRegNo"),
+    mobile: formData.get("mobile"),
+    email: formData.get("email"),
+    quantity: Number(formData.get("quantity"))
+  })
+});
+
+const result = await response.json();
+
+if (!response.ok || !result.success) {
+  alert(result.error || "Registration failed");
+  return;
+}
+
+alert("Registration saved successfully!");
         );
 
       });
