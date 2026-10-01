@@ -119,6 +119,7 @@
       from {
         filter: brightness(0.9);
       }
+
       to {
         filter: brightness(1.3);
       }
@@ -183,6 +184,7 @@
       padding: 17px 34px;
 
       color: #170d06;
+
       background: linear-gradient(
         135deg,
         #c79a42,
@@ -203,6 +205,7 @@
 
     .cta:hover {
       transform: translateY(-3px);
+
       box-shadow:
         0 15px 45px rgba(214, 164, 70, 0.25);
     }
@@ -213,6 +216,7 @@
 
     .section {
       padding: 90px 20px;
+
       background:
         radial-gradient(
           circle at top,
@@ -247,6 +251,7 @@
       text-align: center;
 
       border: 1px solid rgba(218, 178, 91, 0.22);
+
       background:
         linear-gradient(
           145deg,
@@ -401,6 +406,11 @@
       filter: brightness(1.1);
     }
 
+    .pay-button:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
     /* =========================
        FOOTER
     ========================= */
@@ -463,7 +473,9 @@
 
 <body>
 
-  <!-- HERO -->
+  <!-- =========================
+       HERO
+  ========================= -->
 
   <header class="hero">
 
@@ -522,7 +534,9 @@
   </header>
 
 
-  <!-- EVENT DETAILS -->
+  <!-- =========================
+       EVENT DETAILS
+  ========================= -->
 
   <section class="section">
 
@@ -533,6 +547,7 @@
     <div class="cards">
 
       <div class="card">
+
         <div class="card-label">
           Date
         </div>
@@ -540,9 +555,12 @@
         <div class="card-value">
           14 October 2026
         </div>
+
       </div>
 
+
       <div class="card">
+
         <div class="card-label">
           Time
         </div>
@@ -550,9 +568,12 @@
         <div class="card-value">
           5:30 PM onwards
         </div>
+
       </div>
 
+
       <div class="card">
+
         <div class="card-label">
           Venue
         </div>
@@ -561,9 +582,12 @@
           Shree Devi Institution,<br>
           Kenjar
         </div>
+
       </div>
 
+
       <div class="card">
+
         <div class="card-label">
           Tickets
         </div>
@@ -571,6 +595,7 @@
         <div class="card-value">
           ₹399 / Person
         </div>
+
       </div>
 
     </div>
@@ -578,7 +603,9 @@
   </section>
 
 
-  <!-- TICKET REGISTRATION -->
+  <!-- =========================
+       TICKET REGISTRATION
+  ========================= -->
 
   <section class="tickets" id="tickets">
 
@@ -595,6 +622,7 @@
       <div class="price-note">
         Per Person
       </div>
+
 
       <form id="registrationForm">
 
@@ -715,6 +743,7 @@
         <button
           type="submit"
           class="pay-button"
+          id="paymentButton"
         >
           CONTINUE TO PAYMENT
         </button>
@@ -726,7 +755,9 @@
   </section>
 
 
-  <!-- FOOTER -->
+  <!-- =========================
+       FOOTER
+  ========================= -->
 
   <footer>
 
@@ -749,7 +780,14 @@
   </footer>
 
 
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
   <script>
+
+    const registrationForm =
+      document.getElementById("registrationForm");
 
     const quantity =
       document.getElementById("quantity");
@@ -757,8 +795,15 @@
     const totalPrice =
       document.getElementById("totalPrice");
 
+    const paymentButton =
+      document.getElementById("paymentButton");
+
     const pricePerTicket = 399;
 
+
+    /* =========================
+       TOTAL PRICE
+    ========================= */
 
     function updateTotal() {
 
@@ -777,39 +822,112 @@
     );
 
 
-    document
-      .getElementById("registrationForm")
-      .addEventListener("submit", function(event) {
+    /* =========================
+       REGISTRATION
+    ========================= */
+
+    registrationForm.addEventListener(
+      "submit",
+      async function(event) {
 
         event.preventDefault();
 
-        const formData = new FormData(form);
 
-const response = await fetch("/api/register", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    fullName: formData.get("fullName"),
-    studentRegNo: formData.get("studentRegNo"),
-    mobile: formData.get("mobile"),
-    email: formData.get("email"),
-    quantity: Number(formData.get("quantity"))
-  })
-});
+        paymentButton.disabled = true;
 
-const result = await response.json();
+        paymentButton.textContent =
+          "PROCESSING...";
 
-if (!response.ok || !result.success) {
-  alert(result.error || "Registration failed");
-  return;
-}
 
-alert("Registration saved successfully!");
-        );
+        try {
 
-      });
+          const formData =
+            new FormData(registrationForm);
+
+
+          const response =
+            await fetch(
+              "/api/register",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body: JSON.stringify({
+
+                  fullName:
+                    formData.get("fullName"),
+
+                  studentRegNo:
+                    formData.get("studentRegNo"),
+
+                  mobile:
+                    formData.get("mobile"),
+
+                  email:
+                    formData.get("email"),
+
+                  quantity:
+                    Number(
+                      formData.get("quantity")
+                    )
+
+                })
+              }
+            );
+
+
+          const result =
+            await response.json();
+
+
+          if (
+            !response.ok ||
+            !result.success
+          ) {
+
+            throw new Error(
+              result.error ||
+              "Registration failed"
+            );
+
+          }
+
+
+          alert(
+            "Registration saved successfully!"
+          );
+
+
+          console.log(
+            "Registration:",
+            result.registration
+          );
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          alert(
+            error.message ||
+            "Something went wrong. Please try again."
+          );
+
+        } finally {
+
+          paymentButton.disabled = false;
+
+          paymentButton.textContent =
+            "CONTINUE TO PAYMENT";
+
+        }
+
+      }
+    );
 
   </script>
 
