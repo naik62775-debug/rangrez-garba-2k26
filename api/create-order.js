@@ -1,11 +1,10 @@
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
 
-const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID;
-const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY;
+const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID;
+const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 
-const CASHFREE_API =
-  "https://sandbox.cashfree.com/pg/orders";
+const RAZORPAY_API = "https://api.razorpay.com/v1/orders";
 
 module.exports = async function handler(req, res) {
 
@@ -26,11 +25,6 @@ module.exports = async function handler(req, res) {
       quantity
     } = req.body || {};
 
-
-    /* =========================
-       VALIDATION
-    ========================= */
-
     if (
       !fullName ||
       !studentRegNo ||
@@ -38,108 +32,77 @@ module.exports = async function handler(req, res) {
       !email ||
       !quantity
     ) {
-
       return res.status(400).json({
         success: false,
         error: "Please fill all required fields"
       });
-
     }
 
-
     const qty = Number(quantity);
-
 
     if (
       !Number.isInteger(qty) ||
       qty < 1 ||
       qty > 5
     ) {
-
       return res.status(400).json({
         success: false,
         error: "Invalid ticket quantity"
       });
-
     }
-
-
-    /* =========================
-       CHECK ENVIRONMENT
-    ========================= */
 
     if (
       !SUPABASE_URL ||
       !SUPABASE_SECRET_KEY
     ) {
-
       return res.status(500).json({
         success: false,
         error: "Supabase is not configured"
       });
-
     }
-
 
     if (
-      !CASHFREE_APP_ID ||
-      !CASHFREE_SECRET_KEY
+      !RAZORPAY_KEY_ID ||
+      !RAZORPAY_KEY_SECRET
     ) {
-
       return res.status(500).json({
         success: false,
-        error: "Cashfree is not configured"
+        error: "Razorpay is not configured"
       });
-
     }
 
+    /* Check remaining tickets */
 
-    /* =========================
-       CHECK AVAILABLE TICKETS
-    ========================= */
-
-    const countResponse =
-      await fetch(
-        `${SUPABASE_URL}/rest/v1/registration?select=quantity&payment_status=eq.paid`,
-        {
-          method: "GET",
-
-          headers: {
-            apikey: SUPABASE_SECRET_KEY,
-            Authorization:
-              `Bearer ${SUPABASE_SECRET_KEY}`
-          }
+    const countResponse = await fetch(
+      `${SUPABASE_URL}/rest/v1/registration?select=quantity&payment_status=eq.paid`,
+      {
+        method: "GET",
+        headers: {
+          apikey: SUPABASE_SECRET_KEY,
+          Authorization: `Bearer ${SUPABASE_SECRET_KEY}`
         }
-      );
-
+      }
+    );
 
     const countText =
       await countResponse.text();
 
-
     if (!countResponse.ok) {
-
       return res.status(500).json({
         success: false,
-        error:
-          "Unable to check ticket availability"
+        error: "Unable to check ticket availability"
       });
-
     }
-
 
     const paidRegistrations =
       JSON.parse(countText);
 
-
     const sold =
       paidRegistrations.reduce(
         (total, item) =>
-          total +
-          Number(item.quantity || 0),
+          total + Number(item.quantity || 0),
         0
       );
-
 
     const capacity = 369;
 
@@ -149,29 +112,25 @@ module.exports = async function handler(req, res) {
         0
       );
 
-
     if (remaining < qty) {
-
       return res.status(400).json({
         success: false,
         error:
           `Only ${remaining} ticket(s) are currently available.`
       });
-
     }
 
-
-    /* =========================
-       AMOUNT
-    ========================= */
+    /* Ticket amount */
 
     const amount =
       qty * 399;
 
+    /* Razorpay uses paise */
 
-    /* =========================
-       CREATE UNIQUE ORDER ID
-    ========================= */
+    const amountInPaise =
+      amount * 100;
+
+    /* Create unique order ID */
 
     const orderId =
       "RZ2K26_" +
@@ -182,116 +141,97 @@ module.exports = async function handler(req, res) {
         .substring(2, 8);
 
 
-    /* =========================
-       CREATE CASHFREE ORDER
-    ========================= */
+    /* Razorpay authentication */
 
-    const cashfreeResponse =
+    const auth =
+      Buffer
+        .from(
+          `${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`
+        )
+        .toString("base64");
+
+
+    /* Create Razorpay order */
+
+    const razorpayResponse =
       await fetch(
-        CASHFREE_API,
+        RAZORPAY_API,
         {
           method: "POST",
 
           headers: {
-
-            "x-client-id":
-              CASHFREE_APP_ID,
-
-            "x-client-secret":
-              CASHFREE_SECRET_KEY,
-
-            "x-api-version":
-              "2025-01-01",
+            "Authorization":
+              `Basic ${auth}`,
 
             "Content-Type":
               "application/json",
 
             "Accept":
               "application/json"
-
           },
 
           body:
             JSON.stringify({
 
-              order_amount:
-                amount,
+              amount:
+                amountInPaise,
 
-              order_currency:
+              currency:
                 "INR",
 
-              order_id:
+              receipt:
                 orderId,
 
+              notes: {
 
-              customer_details: {
+                event:
+                  "Rangrez Garba Night 2K26",
 
-                customer_id:
+                student_reg_no:
                   studentRegNo,
 
-                customer_name:
-                  fullName,
+                quantity:
+                  String(qty)
 
-                customer_email:
-                  email,
-
-                customer_phone:
-                  mobile
-
-              },
-
-
-              order_meta: {
-
-                return_url:
-                  "https://rangrez-garba-2k26.vercel.app/?payment=success&order_id={order_id}"
-
-              },
-
-
-              order_note:
-                "Rangrez Garba Night 2K26"
+              }
 
             })
-
         }
       );
 
 
-    const cashfreeText =
-      await cashfreeResponse.text();
+    const razorpayText =
+      await razorpayResponse.text();
 
 
-    if (!cashfreeResponse.ok) {
+    if (!razorpayResponse.ok) {
 
       console.error(
-        "Cashfree error:",
-        cashfreeText
+        "Razorpay error:",
+        razorpayText
       );
 
       return res.status(
-        cashfreeResponse.status
+        razorpayResponse.status
       ).json({
 
         success: false,
 
         error:
-          cashfreeText
+          razorpayText
 
       });
 
     }
 
 
-    const cashfreeData =
+    const razorpayData =
       JSON.parse(
-        cashfreeText
+        razorpayText
       );
 
 
-    /* =========================
-       SAVE PENDING REGISTRATION
-    ========================= */
+    /* Save registration */
 
     const supabaseResponse =
       await fetch(
@@ -340,7 +280,7 @@ module.exports = async function handler(req, res) {
                 "pending",
 
               cashfree_order_id:
-                orderId
+                razorpayData.id
 
             })
 
@@ -377,19 +317,22 @@ module.exports = async function handler(req, res) {
       );
 
 
-    /* =========================
-       RETURN PAYMENT SESSION
-    ========================= */
-
     return res.status(200).json({
 
-      success: true,
+      success:
+        true,
 
       orderId:
-        cashfreeData.order_id,
+        razorpayData.id,
 
-      paymentSessionId:
-        cashfreeData.payment_session_id,
+      amount:
+        amount,
+
+      amountInPaise:
+        amountInPaise,
+
+      keyId:
+        RAZORPAY_KEY_ID,
 
       registration:
         registrationData[0]
@@ -397,15 +340,12 @@ module.exports = async function handler(req, res) {
     });
 
 
-  }
-
-  catch (error) {
+  } catch (error) {
 
     console.error(
-      "Create order error:",
+      "Create Razorpay order error:",
       error
     );
-
 
     return res.status(500).json({
 
