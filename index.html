@@ -1,1275 +1,1359 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Rangrez – The Garba Night 2K26</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Cinzel:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: #080504;
-      color: #f7ead0;
-      font-family: "DM Sans", sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-      min-height: 100vh;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-
-      background:
-        linear-gradient(
-          rgba(5, 2, 1, 0.42),
-          rgba(5, 2, 1, 0.78)
-        ),
-        url("https://media.indulgexpress.com/indulgexpress%2F2025-09-26%2F0zdll5pw%2FLively_lights.jpg?auto=format%2Ccompress&w=1800")
-        center/cover no-repeat;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-
-      background:
-        radial-gradient(
-          circle at center,
-          transparent 10%,
-          rgba(0,0,0,0.55) 75%
-        );
-
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      width: min(1100px, 92%);
-      padding: 70px 20px;
-    }
-
-    .college {
-      font-family: "Cinzel", serif;
-      font-size: clamp(18px, 3vw, 30px);
-      letter-spacing: 8px;
-      font-weight: 600;
-      color: #f5d58b;
-      margin-bottom: 12px;
-    }
-
-    .presents {
-      font-size: 12px;
-      letter-spacing: 6px;
-      color: #e6c77e;
-      margin-bottom: 30px;
-    }
-
-    .rangrez {
-      font-family: "Bodoni Moda", serif;
-      font-size: clamp(75px, 17vw, 190px);
-      line-height: 0.8;
-      font-weight: 700;
-      letter-spacing: -7px;
-
-      background: linear-gradient(
-        90deg,
-        #8f651d,
-        #f8df9a,
-        #fff1bd,
-        #b47b25,
-        #f5d98d
-      );
-
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-
-      text-shadow:
-        0 0 35px rgba(220, 170, 70, 0.25);
-
-      animation: goldGlow 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes goldGlow {
-      from {
-        filter: brightness(0.9);
-      }
-
-      to {
-        filter: brightness(1.3);
-      }
-    }
-
-    .garba-night {
-      margin-top: 30px;
-      font-family: "Cinzel", serif;
-      font-size: clamp(20px, 4vw, 48px);
-      letter-spacing: 9px;
-      color: #fff3d1;
-    }
-
-    .year {
-      font-family: "Bodoni Moda", serif;
-      font-size: clamp(55px, 10vw, 110px);
-      color: #bd2828;
-      font-weight: 700;
-      letter-spacing: 12px;
-      margin-top: 8px;
-
-      text-shadow:
-        0 0 25px rgba(190, 30, 30, 0.45);
-    }
-
-    .presented {
-      margin-top: 25px;
-      font-size: 12px;
-      letter-spacing: 4px;
-      color: #d7c29a;
-    }
-
-    .tagline {
-      margin-top: 28px;
-      font-family: "Bodoni Moda", serif;
-      font-size: clamp(18px, 3vw, 28px);
-      font-style: italic;
-      color: #f2d899;
-    }
-
-    .event-info {
-      margin: 38px auto;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .info-item {
-      padding: 13px 20px;
-      border: 1px solid rgba(218, 178, 91, 0.35);
-      background: rgba(20, 8, 4, 0.65);
-      backdrop-filter: blur(8px);
-      border-radius: 40px;
-      color: #f6e2b2;
-      font-size: 14px;
-    }
-
-    .cta {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 17px 34px;
-
-      color: #170d06;
-
-      background: linear-gradient(
-        135deg,
-        #c79a42,
-        #f8e1a0,
-        #b77c25
-      );
-
-      text-decoration: none;
-      font-weight: 800;
-      letter-spacing: 2px;
-      border-radius: 3px;
-
-      box-shadow:
-        0 10px 35px rgba(0,0,0,0.35);
-
-      transition: 0.3s;
-    }
-
-    .cta:hover {
-      transform: translateY(-3px);
-
-      box-shadow:
-        0 15px 45px rgba(214, 164, 70, 0.25);
-    }
-
-    /* =========================
-       LIVE TICKET COUNTER
-    ========================= */
-
-    .live-counter {
-      width: min(520px, 94%);
-      margin: 25px auto 0;
-      padding: 18px 22px;
-
-      border: 1px solid rgba(224, 184, 92, 0.3);
-      background: rgba(10, 5, 3, 0.72);
-      backdrop-filter: blur(10px);
-
-      text-align: center;
-
-      box-shadow:
-        0 10px 35px rgba(0,0,0,0.3);
-    }
-
-    .counter-label {
-      display: block;
-      font-size: 10px;
-      letter-spacing: 3px;
-      color: #bca77c;
-      margin-bottom: 5px;
-    }
-
-    .counter-number {
-      font-family: "Cinzel", serif;
-      font-size: 34px;
-      font-weight: 700;
-      color: #f5d58b;
-    }
-
-    .counter-total {
-      font-family: "Cinzel", serif;
-      font-size: 18px;
-      color: #9f8b68;
-    }
-
-    .counter-status {
-      display: block;
-      margin-top: 4px;
-      font-size: 11px;
-      letter-spacing: 1px;
-      color: #bca77c;
-    }
-
-    /* =========================
-       DETAILS
-    ========================= */
-
-    .section {
-      padding: 90px 20px;
-
-      background:
-        radial-gradient(
-          circle at top,
-          rgba(133, 20, 20, 0.16),
-          transparent 45%
-        ),
-        #090605;
-    }
-
-    .section-title {
-      text-align: center;
-      font-family: "Cinzel", serif;
-      color: #e7c879;
-      font-size: clamp(28px, 5vw, 48px);
-      letter-spacing: 4px;
-      margin-bottom: 45px;
-    }
-
-    .cards {
-      width: min(1100px, 94%);
-      margin: auto;
-
-      display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-      gap: 18px;
-    }
-
-    .card {
-      padding: 30px 22px;
-      text-align: center;
-
-      border: 1px solid rgba(218, 178, 91, 0.22);
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(40, 16, 10, 0.9),
-          rgba(12, 7, 5, 0.95)
-        );
-
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.04);
-
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(218, 178, 91, 0.55);
-    }
-
-    .card-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: #a99068;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    .card-value {
-      font-family: "Cinzel", serif;
-      color: #f5dfa4;
-      font-size: 19px;
-      line-height: 1.5;
-    }
-
-    /* =========================
-       TICKETS
-    ========================= */
-
-    .tickets {
-      position: relative;
-      padding: 100px 20px;
-
-      background:
-        linear-gradient(
-          rgba(7, 3, 2, 0.84),
-          rgba(7, 3, 2, 0.94)
-        ),
-        url("https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1600&q=80")
-        center/cover no-repeat;
-    }
-
-    .ticket-box {
-      width: min(650px, 94%);
-      margin: auto;
-
-      padding: 42px 28px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(32, 14, 8, 0.96),
-          rgba(9, 5, 3, 0.98)
-        );
-
-      border: 1px solid rgba(224, 184, 92, 0.4);
-
-      box-shadow:
-        0 25px 80px rgba(0,0,0,0.6);
-    }
-
-    .price {
-      text-align: center;
-      font-family: "Bodoni Moda", serif;
-      font-size: 65px;
-      font-weight: 700;
-      color: #f2d48a;
-      margin-bottom: 5px;
-    }
-
-    .price-note {
-      text-align: center;
-      color: #bca77c;
-      margin-bottom: 30px;
-    }
-
-    /* Ticket counter inside registration area */
-
-    .registration-counter {
-      margin: 0 auto 30px;
-      padding: 18px;
-      text-align: center;
-
-      border-top: 1px solid rgba(224,184,92,0.25);
-      border-bottom: 1px solid rgba(224,184,92,0.25);
-
-      background: rgba(0,0,0,0.18);
-    }
-
-    .registration-counter .counter-label {
-      margin-bottom: 5px;
-    }
-
-    .registration-counter .counter-number {
-      font-size: 32px;
-    }
-
-    .form-group {
-      margin-bottom: 17px;
-    }
-
-    label {
-      display: block;
-      font-size: 12px;
-      letter-spacing: 1px;
-      color: #d9c18c;
-      margin-bottom: 7px;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 14px;
-
-      border: 1px solid rgba(224, 184, 92, 0.25);
-      background: rgba(0,0,0,0.35);
-
-      color: white;
-      outline: none;
-
-      font-family: inherit;
-    }
-
-    input:focus,
-    select:focus {
-      border-color: #d7ad57;
-    }
-
-    .total {
-      margin: 25px 0;
-
-      display: flex;
-      justify-content: space-between;
-
-      padding: 17px;
-
-      border-top: 1px solid rgba(224,184,92,0.2);
-      border-bottom: 1px solid rgba(224,184,92,0.2);
-
-      font-family: "Cinzel", serif;
-      color: #f1d796;
-    }
-
-    .pay-button {
-      width: 100%;
-      padding: 17px;
-
-      border: none;
-      cursor: pointer;
-
-      font-weight: 800;
-      letter-spacing: 2px;
-
-      background: linear-gradient(
-        135deg,
-        #c8973d,
-        #f8e0a0,
-        #b57721
-      );
-
-      color: #160c04;
-    }
-
-    .pay-button:hover {
-      filter: brightness(1.1);
-    }
-
-    .pay-button:disabled {
-      opacity: 0.7;
-      cursor: wait;
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer {
-      padding: 40px 20px;
-      text-align: center;
-      background: #050302;
-      border-top: 1px solid rgba(218,178,91,0.15);
-    }
-
-    footer h3 {
-      font-family: "Cinzel", serif;
-      color: #e4c87f;
-      margin-bottom: 12px;
-    }
-
-    footer p {
-      color: #a89779;
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    @media (max-width: 600px) {
-
-      .college {
-        letter-spacing: 4px;
-      }
-
-      .presents {
-        letter-spacing: 3px;
-      }
-
-      .rangrez {
-        letter-spacing: -4px;
-      }
-
-      .garba-night {
-        letter-spacing: 5px;
-      }
-
-      .year {
-        letter-spacing: 7px;
-      }
-
-      .hero-content {
-        padding: 50px 10px;
-      }
-
-      .tickets {
-        padding: 70px 12px;
-      }
-
-      .ticket-box {
-        padding: 32px 20px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rangrez - The Garba Night 2K26</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=Cinzel:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: #080504;
+  color: #f5ead2;
+  overflow-x: hidden;
+}
+
+/* HERO */
+
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      rgba(5,2,1,0.48),
+      rgba(5,2,1,0.86)
+    ),
+    url("https://media.indulgexpress.com/indulgexpress%2F2025-09-26%2F0zdll5pw%2FLively_lights.jpg?auto=format%2Ccompress&w=1800");
+
+  background-size: cover;
+  background-position: center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(180,105,25,0.22),
+      transparent 45%
+    );
+
+  animation: glow 5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(950px,92%);
+  padding: 40px 20px;
+}
+
+.college {
+  font-family: "Cinzel", serif;
+  font-size: clamp(14px,2vw,21px);
+  letter-spacing: 5px;
+  font-weight: 700;
+  color: #e9c77b;
+  margin-bottom: 15px;
+}
+
+.presents {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: #d7c5a0;
+  margin-bottom: 25px;
+}
+
+.rangrez {
+  font-family: "Bodoni Moda", serif;
+  font-size: clamp(65px,13vw,155px);
+  line-height: 0.85;
+  letter-spacing: 8px;
+  color: #f0d18a;
+
+  text-shadow:
+    0 0 25px rgba(240,209,138,0.25),
+    0 5px 40px rgba(0,0,0,0.7);
+}
+
+.garba-night {
+  font-family: "Cinzel", serif;
+  font-size: clamp(18px,4vw,42px);
+  letter-spacing: 8px;
+  margin-top: 20px;
+  color: #f7e6bf;
+}
+
+.year {
+  font-family: "Bodoni Moda", serif;
+  font-size: clamp(45px,8vw,85px);
+  color: #b52b22;
+  letter-spacing: 8px;
+  margin-top: 5px;
+}
+
+.presented {
+  margin-top: 25px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #e0d2b6;
+}
+
+.tagline {
+  margin-top: 22px;
+  font-family: "Bodoni Moda", serif;
+  font-style: italic;
+  font-size: clamp(17px,3vw,27px);
+  color: #f0d18a;
+}
+
+.event-info {
+  margin-top: 30px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.info-box {
+  padding: 13px 20px;
+
+  border: 1px solid rgba(240,209,138,0.35);
+
+  background: rgba(10,5,3,0.45);
+
+  backdrop-filter: blur(8px);
+
+  font-size: 12px;
+  letter-spacing: 1.5px;
+}
+
+.hero-button {
+  display: inline-block;
+
+  margin-top: 35px;
+
+  padding: 16px 34px;
+
+  text-decoration: none;
+
+  color: #160c04;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f5d78e,
+      #b98532
+    );
+
+  font-family: "Cinzel", serif;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  border-radius: 2px;
+
+  transition: 0.3s ease;
+
+  box-shadow:
+    0 10px 35px rgba(0,0,0,0.35);
+}
+
+.hero-button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 15px 45px rgba(240,209,138,0.25);
+}
+
+.hero-counter {
+  margin-top: 22px;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+
+  color: #dbc99f;
+}
+
+/* SECTIONS */
+
+section {
+  padding: 90px 20px;
+}
+
+.section-inner {
+  max-width: 1050px;
+  margin: auto;
+}
+
+.section-title {
+  text-align: center;
+
+  font-family: "Cinzel", serif;
+
+  font-size: clamp(25px,5vw,42px);
+
+  letter-spacing: 4px;
+
+  color: #e9c77b;
+
+  margin-bottom: 50px;
+}
+
+/* DETAILS */
+
+.details {
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(132,25,15,0.18),
+      transparent 45%
+    ),
+    #090605;
+}
+
+.detail-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap: 18px;
+}
+
+.detail-card {
+  border:
+    1px solid
+    rgba(240,209,138,0.18);
+
+  background:
+    rgba(255,255,255,0.025);
+
+  padding: 32px 20px;
+
+  text-align: center;
+
+  transition: 0.3s ease;
+}
+
+.detail-card:hover {
+  transform: translateY(-5px);
+
+  border-color:
+    rgba(240,209,138,0.45);
+}
+
+.detail-label {
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  color: #a99b80;
+
+  margin-bottom: 12px;
+}
+
+.detail-value {
+  font-family: "Cinzel", serif;
+
+  color: #f0d18a;
+
+  font-size: 17px;
+
+  line-height: 1.5;
+}
+
+/* TICKETS */
+
+.tickets {
+  background:
+    linear-gradient(
+      rgba(20,5,3,0.85),
+      rgba(8,4,2,0.95)
+    );
+}
+
+.ticket-card {
+  max-width: 620px;
+
+  margin: auto;
+
+  padding: 45px 30px;
+
+  border:
+    1px solid
+    rgba(240,209,138,0.3);
+
+  background:
+    rgba(255,255,255,0.035);
+
+  box-shadow:
+    0 20px 80px rgba(0,0,0,0.45);
+}
+
+.ticket-price {
+  text-align: center;
+
+  font-family: "Bodoni Moda", serif;
+
+  font-size: 55px;
+
+  color: #f0d18a;
+
+  margin-bottom: 10px;
+}
+
+.availability {
+  text-align: center;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+
+  color: #c7b895;
+
+  margin-bottom: 35px;
+}
+
+.availability strong {
+  color: #f0d18a;
+
+  font-size: 18px;
+}
+
+form {
+  display: grid;
+
+  gap: 17px;
+}
+
+label {
+  font-size: 11px;
+
+  letter-spacing: 1.5px;
+
+  color: #c8b99b;
+}
+
+input,
+select {
+  width: 100%;
+
+  margin-top: 7px;
+
+  padding: 14px 15px;
+
+  background:
+    rgba(0,0,0,0.4);
+
+  border:
+    1px solid
+    rgba(240,209,138,0.2);
+
+  color: #f7ead0;
+
+  outline: none;
+
+  font-family:
+    "DM Sans",sans-serif;
+}
+
+input:focus,
+select:focus {
+  border-color: #d8b665;
+}
+
+select option {
+  background: #17100b;
+  color: white;
+}
+
+.total-box {
+  margin-top: 5px;
+
+  padding: 17px;
+
+  text-align: center;
+
+  border:
+    1px solid
+    rgba(240,209,138,0.2);
+
+  background:
+    rgba(240,209,138,0.04);
+}
+
+.total-label {
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  color: #a99b80;
+}
+
+.total-price {
+  display: block;
+
+  margin-top: 5px;
+
+  font-family: "Bodoni Moda",serif;
+
+  font-size: 32px;
+
+  color: #f0d18a;
+}
+
+.payment-button {
+  margin-top: 10px;
+
+  width: 100%;
+
+  padding: 17px;
+
+  border: none;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f4d58b,
+      #b98532
+    );
+
+  color: #160b03;
+
+  font-family: "Cinzel",serif;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  transition: 0.3s ease;
+}
+
+.payment-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 35px
+    rgba(240,209,138,0.2);
+}
+
+.payment-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+.small-note {
+  text-align: center;
+
+  font-size: 10px;
+
+  color: #887d6c;
+
+  line-height: 1.6;
+
+  margin-top: 15px;
+}
+
+/* FOOTER */
+
+footer {
+  padding: 45px 20px;
+
+  text-align: center;
+
+  background: #050302;
+
+  border-top:
+    1px solid
+    rgba(240,209,138,0.12);
+}
+
+.footer-title {
+  font-family: "Cinzel",serif;
+
+  color: #e9c77b;
+
+  letter-spacing: 3px;
+
+  font-size: 18px;
+}
+
+.footer-text {
+  margin-top: 12px;
+
+  color: #9b907d;
+
+  font-size: 12px;
+
+  line-height: 1.8;
+}
+
+.helpline {
+  margin-top: 15px;
+
+  color: #d9c59c;
+
+  font-size: 13px;
+}
+
+/* MOBILE */
+
+@media (max-width:750px) {
+
+  .hero {
+    min-height: 95vh;
+  }
+
+  .hero-content {
+    padding: 35px 12px;
+  }
+
+  .college {
+    letter-spacing: 3px;
+  }
+
+  .rangrez {
+    letter-spacing: 3px;
+  }
+
+  .garba-night {
+    letter-spacing: 4px;
+  }
+
+  .year {
+    letter-spacing: 4px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  section {
+    padding: 70px 15px;
+  }
+
+  .ticket-card {
+    padding: 35px 20px;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- =========================
-       HERO
-  ========================= -->
 
-  <header class="hero">
+<!-- HERO -->
 
-    <div class="hero-content">
+<header class="hero">
 
-      <div class="college">
-        SHREE DEVI COLLEGE
-      </div>
+<div class="hero-content">
 
-      <div class="presents">
-        PRESENTS
-      </div>
+<div class="college">
+SHREE DEVI COLLEGE
+</div>
 
-      <div class="rangrez">
-        RANGREZ
-      </div>
+<div class="presents">
+PRESENTS
+</div>
 
-      <div class="garba-night">
-        THE GARBA NIGHT
-      </div>
+<div class="rangrez">
+RANGREZ
+</div>
 
-      <div class="year">
-        2K26
-      </div>
+<div class="garba-night">
+THE GARBA NIGHT
+</div>
 
-      <div class="presented">
-        PRESENTED BY STUDENT COUNCIL MEMBERS
-      </div>
+<div class="year">
+2K26
+</div>
 
-      <div class="tagline">
-        Feel the Beat • Live the Colours
-      </div>
+<div class="presented">
+PRESENTED BY STUDENT COUNCIL MEMBERS
+</div>
 
-      <div class="event-info">
+<div class="tagline">
+Feel the Beat • Live the Colours
+</div>
 
-        <div class="info-item">
-          14 OCTOBER 2026
-        </div>
+<div class="event-info">
 
-        <div class="info-item">
-          5:30 PM ONWARDS
-        </div>
+<div class="info-box">
+14 OCTOBER 2026
+</div>
 
-        <div class="info-item">
-          SHREE DEVI INSTITUTION, KENJAR
-        </div>
+<div class="info-box">
+5:30 PM ONWARDS
+</div>
 
-      </div>
+<div class="info-box">
+SHREE DEVI INSTITUTION, KENJAR
+</div>
 
-      <a href="#tickets" class="cta">
-        RESERVE YOUR PASS
-      </a>
+</div>
 
-      <!-- LIVE COUNTER -->
+<a
+href="#tickets"
+class="hero-button"
+>
+RESERVE YOUR PASS
+</a>
 
-      <div class="live-counter">
+<div class="hero-counter">
 
-        <span class="counter-label">
-          TICKETS AVAILABLE
-        </span>
+<span id="counterStatusHero">
+LIVE AVAILABILITY
+</span>
 
-        <span
-          class="counter-number"
-          id="ticketsRemainingHero"
-        >
-          369
-        </span>
+·
 
-        <span class="counter-total">
-          / 369
-        </span>
+<strong id="ticketsRemainingHero">
+369
+</strong>
 
-        <span
-          class="counter-status"
-          id="counterStatusHero"
-        >
-          LIVE AVAILABILITY
-        </span>
+PASSES REMAINING
 
-      </div>
+</div>
 
-    </div>
+</div>
 
-  </header>
+</header>
 
 
-  <!-- =========================
-       EVENT DETAILS
-  ========================= -->
+<!-- DETAILS -->
 
-  <section class="section">
+<section class="details">
 
-    <h2 class="section-title">
-      THE EVENING
-    </h2>
+<div class="section-inner">
 
-    <div class="cards">
+<h2 class="section-title">
+THE EXPERIENCE
+</h2>
 
-      <div class="card">
+<div class="detail-grid">
 
-        <div class="card-label">
-          Date
-        </div>
+<div class="detail-card">
 
-        <div class="card-value">
-          14 October 2026
-        </div>
+<div class="detail-label">
+DATE
+</div>
 
-      </div>
+<div class="detail-value">
+14 OCTOBER<br>
+2026
+</div>
 
+</div>
 
-      <div class="card">
 
-        <div class="card-label">
-          Time
-        </div>
+<div class="detail-card">
 
-        <div class="card-value">
-          5:30 PM onwards
-        </div>
+<div class="detail-label">
+TIME
+</div>
 
-      </div>
+<div class="detail-value">
+5:30 PM<br>
+ONWARDS
+</div>
 
+</div>
 
-      <div class="card">
 
-        <div class="card-label">
-          Venue
-        </div>
+<div class="detail-card">
 
-        <div class="card-value">
-          Shree Devi Institution,<br>
-          Kenjar
-        </div>
+<div class="detail-label">
+VENUE
+</div>
 
-      </div>
+<div class="detail-value">
+SHREE DEVI<br>
+INSTITUTION, KENJAR
+</div>
 
+</div>
 
-      <div class="card">
 
-        <div class="card-label">
-          Tickets
-        </div>
+<div class="detail-card">
 
-        <div class="card-value">
-          ₹399 / Person
-        </div>
+<div class="detail-label">
+EVENT
+</div>
 
-      </div>
+<div class="detail-value">
+DHANDIYA<br>
+NIGHT
+</div>
 
-    </div>
+</div>
 
-  </section>
 
+<div class="detail-card">
 
-  <!-- =========================
-       TICKET REGISTRATION
-  ========================= -->
+<div class="detail-label">
+EXPERIENCE
+</div>
 
-  <section class="tickets" id="tickets">
+<div class="detail-value">
+TRADITIONAL<br>
+GARBA
+</div>
 
-    <h2 class="section-title">
-      RESERVE YOUR PASS
-    </h2>
+</div>
 
-    <div class="ticket-box">
 
-      <div class="price">
-        ₹399
-      </div>
+<div class="detail-card">
 
-      <div class="price-note">
-        Per Person
-      </div>
+<div class="detail-label">
+ORGANIZED BY
+</div>
 
+<div class="detail-value">
+STUDENT<br>
+COUNCIL MEMBERS
+</div>
 
-      <!-- REGISTRATION COUNTER -->
+</div>
 
-      <div class="registration-counter">
+</div>
 
-        <span class="counter-label">
-          TICKETS AVAILABLE
-        </span>
+</div>
 
-        <span
-          class="counter-number"
-          id="ticketsRemaining"
-        >
-          369
-        </span>
+</section>
 
-        <span class="counter-total">
-          / 369
-        </span>
 
-        <span
-          class="counter-status"
-          id="counterStatus"
-        >
-          LIVE AVAILABILITY
-        </span>
+<!-- TICKETS -->
 
-      </div>
+<section
+class="tickets"
+id="tickets"
+>
 
+<div class="section-inner">
 
-      <form id="registrationForm">
+<h2 class="section-title">
+RESERVE YOUR PASS
+</h2>
 
-        <div class="form-group">
+<div class="ticket-card">
 
-          <label for="fullName">
-            FULL NAME
-          </label>
+<div class="ticket-price">
+₹399
+</div>
 
-          <input
-            type="text"
-            id="fullName"
-            name="fullName"
-            placeholder="Enter your full name"
-            required
-          >
+<div class="availability">
 
-        </div>
+<span id="counterStatus">
+LIVE AVAILABILITY
+</span>
 
+<br>
 
-        <div class="form-group">
+<strong id="ticketsRemaining">
+369
+</strong>
 
-          <label for="studentRegNo">
-            STUDENT REGISTRATION NUMBER
-          </label>
+/
 
-          <input
-            type="text"
-            id="studentRegNo"
-            name="studentRegNo"
-            placeholder="Enter registration number"
-            required
-          >
+369 PASSES REMAINING
 
-        </div>
+</div>
 
 
-        <div class="form-group">
+<form id="registrationForm">
 
-          <label for="mobile">
-            MOBILE NUMBER
-          </label>
 
-          <input
-            type="tel"
-            id="mobile"
-            name="mobile"
-            placeholder="Enter mobile number"
-            required
-          >
+<label>
 
-        </div>
+FULL NAME
 
+<input
+type="text"
+id="fullName"
+name="fullName"
+placeholder="Enter your full name"
+required
+>
 
-        <div class="form-group">
+</label>
 
-          <label for="email">
-            EMAIL
-          </label>
 
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter email address"
-            required
-          >
+<label>
 
-        </div>
+STUDENT REGISTRATION NUMBER
 
+<input
+type="text"
+id="studentRegNo"
+name="studentRegNo"
+placeholder="Enter registration number"
+required
+>
 
-        <div class="form-group">
+</label>
 
-          <label for="quantity">
-            NUMBER OF TICKETS
-          </label>
 
-          <select id="quantity" name="quantity">
+<label>
 
-            <option value="1">
-              1 Ticket
-            </option>
+MOBILE NUMBER
 
-            <option value="2">
-              2 Tickets
-            </option>
+<input
+type="tel"
+id="mobile"
+name="mobile"
+placeholder="Enter mobile number"
+inputmode="numeric"
+required
+>
 
-            <option value="3">
-              3 Tickets
-            </option>
+</label>
 
-            <option value="4">
-              4 Tickets
-            </option>
 
-            <option value="5">
-              5 Tickets
-            </option>
+<label>
 
-          </select>
+EMAIL ADDRESS
 
-        </div>
+<input
+type="email"
+id="email"
+name="email"
+placeholder="Enter email address"
+required
+>
 
+</label>
 
-        <div class="total">
 
-          <span>
-            TOTAL
-          </span>
+<label>
 
-          <span id="totalPrice">
-            ₹399
-          </span>
+NUMBER OF TICKETS
 
-        </div>
+<select
+id="quantity"
+name="quantity"
+required
+>
 
+<option value="1">
+1 Ticket
+</option>
 
-        <button
-          type="submit"
-          class="pay-button"
-          id="paymentButton"
-        >
-          CONTINUE TO PAYMENT
-        </button>
+<option value="2">
+2 Tickets
+</option>
 
-      </form>
+<option value="3">
+3 Tickets
+</option>
 
-    </div>
+<option value="4">
+4 Tickets
+</option>
 
-  </section>
+<option value="5">
+5 Tickets
+</option>
 
+</select>
 
-  <!-- =========================
-       FOOTER
-  ========================= -->
+</label>
 
-  <footer>
 
-    <h3>
-      RANGREZ – THE GARBA NIGHT 2K26
-    </h3>
+<div class="total-box">
 
-    <p>
-      SHREE DEVI COLLEGE
-    </p>
+<span class="total-label">
+TOTAL AMOUNT
+</span>
 
-    <p>
-      Presented by Student Council Members
-    </p>
+<span
+class="total-price"
+id="totalPrice"
+>
+₹399
+</span>
 
-    <p>
-      Helpline: +91 99013 89490 · +91 84315 29176
-    </p>
+</div>
 
-  </footer>
 
+<button
+type="submit"
+class="payment-button"
+id="paymentButton"
+>
+CONTINUE TO PAYMENT
+</button>
 
-  <!-- =========================
-       JAVASCRIPT
-  ========================= -->
 
-  <script>
+<div class="small-note">
 
-    const registrationForm =
-      document.getElementById("registrationForm");
+Secure online payment powered by Cashfree.
+Your ticket will be generated after successful
+payment verification.
 
-    const quantity =
-      document.getElementById("quantity");
+</div>
 
-    const totalPrice =
-      document.getElementById("totalPrice");
+</form>
 
-    const paymentButton =
-      document.getElementById("paymentButton");
+</div>
 
-    const ticketsRemaining =
-      document.getElementById("ticketsRemaining");
+</div>
 
-    const ticketsRemainingHero =
-      document.getElementById("ticketsRemainingHero");
+</section>
 
-    const counterStatus =
-      document.getElementById("counterStatus");
 
-    const counterStatusHero =
-      document.getElementById("counterStatusHero");
+<!-- FOOTER -->
 
-    const pricePerTicket = 399;
+<footer>
 
-    const TOTAL_CAPACITY = 369;
+<div class="footer-title">
+RANGREZ • THE GARBA NIGHT 2K26
+</div>
 
+<div class="footer-text">
+SHREE DEVI COLLEGE<br>
+SHREE DEVI INSTITUTION, KENJAR
+</div>
 
-    /* =========================
-       TOTAL PRICE
-    ========================= */
+<div class="helpline">
 
-    function updateTotal() {
+HELPLINE<br>
 
-      const qty =
-        Number(quantity.value);
++91 99013 89490
+&nbsp; | &nbsp;
++91 84315 29176
 
-      totalPrice.textContent =
-        "₹" + (qty * pricePerTicket);
+</div>
 
-    }
+</footer>
 
 
-    quantity.addEventListener(
-      "change",
-      updateTotal
-    );
+<!-- CASHFREE -->
 
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
-    /* =========================
-       LIVE TICKET COUNT
-    ========================= */
 
-    async function loadTicketCount() {
+<script>
 
-      try {
+/* ELEMENTS */
 
-        const response =
-          await fetch(
-            "/api/count",
-            {
-              cache: "no-store"
-            }
-          );
+const registrationForm =
+document.getElementById("registrationForm");
 
-        const data =
-          await response.json();
+const quantity =
+document.getElementById("quantity");
 
+const totalPrice =
+document.getElementById("totalPrice");
 
-        if (
-          !response.ok ||
-          !data.success
-        ) {
-          throw new Error(
-            data.error ||
-            "Unable to load ticket count"
-          );
-        }
+const paymentButton =
+document.getElementById("paymentButton");
 
+const ticketsRemaining =
+document.getElementById("ticketsRemaining");
 
-        const remaining =
-          Math.max(
-            0,
-            Number(data.remaining)
-          );
+const ticketsRemainingHero =
+document.getElementById("ticketsRemainingHero");
 
+const counterStatus =
+document.getElementById("counterStatus");
 
-        ticketsRemaining.textContent =
-          remaining;
+const counterStatusHero =
+document.getElementById("counterStatusHero");
 
-        ticketsRemainingHero.textContent =
-          remaining;
 
+const pricePerTicket = 399;
 
-        if (remaining <= 0) {
 
-          counterStatus.textContent =
-            "SOLD OUT";
+/* CASHFREE */
 
-          counterStatusHero.textContent =
-            "SOLD OUT";
+const cashfree = Cashfree({
+mode: "sandbox"
+});
 
-          paymentButton.disabled = true;
 
-          paymentButton.textContent =
-            "SOLD OUT";
+/* TOTAL PRICE */
 
-        } else {
+function updateTotal() {
 
-          counterStatus.textContent =
-            "LIVE AVAILABILITY";
+const qty =
+Number(quantity.value);
 
-          counterStatusHero.textContent =
-            "LIVE AVAILABILITY";
+totalPrice.textContent =
+"₹" + (qty * pricePerTicket);
 
-        }
+}
 
 
-      } catch (error) {
+quantity.addEventListener(
+"change",
+updateTotal
+);
 
-        console.error(
-          "Ticket count error:",
-          error
-        );
 
-      }
+/* LOAD TICKET COUNT */
 
-    }
+async function loadTicketCount() {
 
+try {
 
-    /*
-      Load immediately
-    */
+const response =
+await fetch(
+"/api/count",
+{
+cache: "no-store"
+}
+);
 
-    loadTicketCount();
+const data =
+await response.json();
 
+if (
+!response.ok ||
+!data.success
+) {
 
-    /*
-      Refresh every 30 seconds
-    */
+throw new Error(
+data.error ||
+"Unable to load ticket count"
+);
 
-    setInterval(
-      loadTicketCount,
-      30000
-    );
+}
 
+const remaining =
+Math.max(
+0,
+Number(data.remaining)
+);
 
-    /* =========================
-       REGISTRATION
-    ========================= */
+ticketsRemaining.textContent =
+remaining;
 
-    registrationForm.addEventListener(
-      "submit",
-      async function(event) {
+ticketsRemainingHero.textContent =
+remaining;
 
-        event.preventDefault();
 
+if (remaining <= 0) {
 
-        /*
-          Check current availability
-        */
+counterStatus.textContent =
+"SOLD OUT";
 
-        try {
+counterStatusHero.textContent =
+"SOLD OUT";
 
-          const countResponse =
-            await fetch(
-              "/api/count",
-              {
-                cache: "no-store"
-              }
-            );
+paymentButton.disabled =
+true;
 
-          const countData =
-            await countResponse.json();
+paymentButton.textContent =
+"SOLD OUT";
 
+}
 
-          if (
-            !countResponse.ok ||
-            !countData.success
-          ) {
+else {
 
-            throw new Error(
-              "Unable to check ticket availability."
-            );
+counterStatus.textContent =
+"LIVE AVAILABILITY";
 
-          }
+counterStatusHero.textContent =
+"LIVE AVAILABILITY";
 
+paymentButton.disabled =
+false;
 
-          const selectedQuantity =
-            Number(quantity.value);
+paymentButton.textContent =
+"CONTINUE TO PAYMENT";
 
+}
 
-          if (
-            selectedQuantity >
-            Number(countData.remaining)
-          ) {
+}
 
-            alert(
-              "Only " +
-              countData.remaining +
-              " ticket(s) are currently available."
-            );
+catch (error) {
 
-            loadTicketCount();
+console.error(
+"Ticket count error:",
+error
+);
 
-            return;
+}
 
-          }
+}
 
 
-          if (
-            Number(countData.remaining) <= 0
-          ) {
+loadTicketCount();
 
-            alert(
-              "Sorry, all tickets are sold out."
-            );
 
-            loadTicketCount();
+setInterval(
+loadTicketCount,
+30000
+);
 
-            return;
 
-          }
+/* PAYMENT */
 
+registrationForm.addEventListener(
+"submit",
+async function(event) {
 
-        } catch (error) {
+event.preventDefault();
 
-          console.error(error);
+paymentButton.disabled =
+true;
 
-          alert(
-            error.message ||
-            "Unable to check ticket availability."
-          );
+paymentButton.textContent =
+"CHECKING AVAILABILITY...";
 
-          return;
 
-        }
+try {
 
+/* CHECK COUNT */
 
-        paymentButton.disabled = true;
+const countResponse =
+await fetch(
+"/api/count",
+{
+cache: "no-store"
+}
+);
 
-        paymentButton.textContent =
-          "PROCESSING...";
+const countData =
+await countResponse.json();
 
+if (
+!countResponse.ok ||
+!countData.success
+) {
 
-        try {
+throw new Error(
+countData.error ||
+"Unable to check ticket availability."
+);
 
-          const formData =
-            new FormData(registrationForm);
+}
 
 
-          const response =
-            await fetch(
-              "/api/register",
-              {
-                method: "POST",
+const selectedQuantity =
+Number(quantity.value);
 
-                headers: {
-                  "Content-Type":
-                    "application/json"
-                },
 
-                body: JSON.stringify({
+if (
+selectedQuantity >
+Number(countData.remaining)
+) {
 
-                  fullName:
-                    formData.get("fullName"),
+throw new Error(
+"Only " +
+countData.remaining +
+" ticket(s) are currently available."
+);
 
-                  studentRegNo:
-                    formData.get("studentRegNo"),
+}
 
-                  mobile:
-                    formData.get("mobile"),
 
-                  email:
-                    formData.get("email"),
+if (
+Number(countData.remaining) <= 0
+) {
 
-                  quantity:
-                    Number(
-                      formData.get("quantity")
-                    )
+throw new Error(
+"Sorry, all tickets are sold out."
+);
 
-                })
-              }
-            );
+}
 
 
-          const result =
-            await response.json();
+/* FORM DATA */
 
+const formData =
+new FormData(
+registrationForm
+);
 
-          if (
-            !response.ok ||
-            !result.success
-          ) {
 
-            throw new Error(
-              result.error ||
-              "Registration failed"
-            );
+const customerData = {
 
-          }
+fullName:
+formData.get("fullName"),
 
+studentRegNo:
+formData.get("studentRegNo"),
 
-          alert(
-            "Registration saved successfully!"
-          );
+mobile:
+formData.get("mobile"),
 
+email:
+formData.get("email"),
 
-          console.log(
-            "Registration:",
-            result.registration
-          );
+quantity:
+selectedQuantity
 
+};
 
-          /*
-            Refresh counter after registration
-          */
 
-          loadTicketCount();
+/* CREATE ORDER */
 
+paymentButton.textContent =
+"CREATING PAYMENT...";
 
-        } catch (error) {
 
-          console.error(error);
+const orderResponse =
+await fetch(
+"/api/create-order",
+{
 
-          alert(
-            error.message ||
-            "Something went wrong. Please try again."
-          );
+method: "POST",
 
+headers: {
+"Content-Type":
+"application/json"
+},
 
-        } finally {
+body:
+JSON.stringify(
+customerData
+)
 
-          paymentButton.disabled = false;
+}
+);
 
-          paymentButton.textContent =
-            "CONTINUE TO PAYMENT";
 
-          /*
-            Re-check if sold out
-          */
+const orderData =
+await orderResponse.json();
 
-          loadTicketCount();
 
-        }
+if (
+!orderResponse.ok ||
+!orderData.success
+) {
 
-      }
-    );
+throw new Error(
+orderData.error ||
+"Unable to create payment."
+);
 
+}
 
-    /*
-      Initial total
-    */
 
-    updateTotal();
+if (
+!orderData.paymentSessionId
+) {
 
-  </script>
+throw new Error(
+"Cashfree payment session was not created."
+);
+
+}
+
+
+/* OPEN CASHFREE */
+
+paymentButton.textContent =
+"OPENING PAYMENT...";
+
+
+const checkoutResult =
+await cashfree.checkout({
+
+paymentSessionId:
+orderData.paymentSessionId,
+
+redirectTarget:
+"_self"
+
+});
+
+
+if (
+checkoutResult &&
+checkoutResult.error
+) {
+
+console.error(
+"Cashfree checkout error:",
+checkoutResult.error
+);
+
+throw new Error(
+checkoutResult.error.message ||
+"Unable to open Cashfree checkout."
+);
+
+}
+
+}
+
+catch (error) {
+
+console.error(
+"Payment error:",
+error
+);
+
+alert(
+error.message ||
+"Something went wrong. Please try again."
+);
+
+paymentButton.disabled =
+false;
+
+paymentButton.textContent =
+"CONTINUE TO PAYMENT";
+
+loadTicketCount();
+
+}
+
+});
+
+
+/* INITIAL PRICE */
+
+updateTotal();
+
+</script>
 
 </body>
 </html>
