@@ -1,284 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+async function verifyTicket(qrToken) {
 
-  <title>Rangrez – Ticket Verification</title>
+  if (checking) {
+    return;
+  }
 
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  checking = true;
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  try {
 
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    const response =
+      await fetch(
+        "/api/verify-ticket?qr_token=" +
+        encodeURIComponent(qrToken)
+      );
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(180,120,30,.12), transparent 35%),
-        radial-gradient(circle at 80% 80%, rgba(100,20,20,.15), transparent 35%),
-        #070505;
-      color: #f3dfb0;
-      font-family: "DM Sans", sans-serif;
-      padding: 25px 16px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 600px;
-      margin: auto;
-    }
-
-    .header {
-      text-align: center;
-      padding: 25px 10px;
-    }
-
-    .college {
-      font-family: "Cinzel", serif;
-      font-size: 13px;
-      letter-spacing: 4px;
-      color: #cba15a;
-    }
-
-    h1 {
-      margin-top: 15px;
-      font-family: "Cinzel", serif;
-      font-size: clamp(25px, 7vw, 40px);
-      letter-spacing: 3px;
-      color: #f0cc80;
-    }
-
-    .subtitle {
-      margin-top: 10px;
-      color: #8e806b;
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
-
-    .scanner-box {
-      margin-top: 20px;
-      padding: 20px;
-      background: rgba(255,255,255,.025);
-      border: 1px solid rgba(210,165,75,.3);
-      border-radius: 8px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.4);
-    }
-
-    #reader {
-      width: 100%;
-      overflow: hidden;
-      border-radius: 6px;
-    }
-
-    #reader video {
-      border-radius: 6px;
-    }
-
-    .result {
-      display: none;
-      margin-top: 25px;
-      padding: 25px;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .valid {
-      display: block;
-      background: rgba(35,100,45,.15);
-      border: 1px solid rgba(100,200,110,.45);
-    }
-
-    .invalid {
-      display: block;
-      background: rgba(130,30,25,.15);
-      border: 1px solid rgba(240,80,70,.45);
-    }
-
-    .result-icon {
-      font-size: 48px;
-      margin-bottom: 10px;
-    }
-
-    .result h2 {
-      font-family: "Cinzel", serif;
-      letter-spacing: 2px;
-      margin-bottom: 18px;
-    }
-
-    .valid h2 {
-      color: #a9e0a7;
-    }
-
-    .invalid h2 {
-      color: #ffaaa0;
-    }
-
-    .ticket-info {
-      text-align: left;
-      margin-top: 15px;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      font-size: 13px;
-    }
-
-    .row span:first-child {
-      color: #8f8068;
-    }
-
-    .row span:last-child {
-      color: #ead7ad;
-      font-weight: 600;
-      text-align: right;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 18px;
-      padding: 15px;
-      border: 1px solid #bd8c3e;
-      background: #bd8c3e;
-      color: #120d08;
-      font-family: "Cinzel", serif;
-      font-weight: 700;
-      letter-spacing: 2px;
-      cursor: pointer;
-      border-radius: 3px;
-    }
-
-    .instruction {
-      text-align: center;
-      margin-top: 18px;
-      color: #756b5a;
-      font-size: 11px;
-      line-height: 1.7;
-    }
-
-    .error {
-      margin-top: 15px;
-      color: #ffaaa0;
-      text-align: center;
-      font-size: 13px;
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="container">
-
-    <div class="header">
-
-      <div class="college">
-        SHREE DEVI COLLEGE
-      </div>
-
-      <h1>
-        TICKET VERIFICATION
-      </h1>
-
-      <div class="subtitle">
-        RANGREZ – THE GARBA NIGHT 2K26
-      </div>
-
-    </div>
+    const data =
+      await response.json();
 
 
-    <div class="scanner-box">
+    if (
+      data.success &&
+      data.valid &&
+      data.ticket
+    ) {
 
-      <div id="reader"></div>
+      showResultValid(
+        data.ticket
+      );
 
-      <div class="instruction">
-        Allow camera access and scan the QR code displayed on the guest's ticket.
-      </div>
-
-    </div>
-
-
-    <div
-      id="result"
-      class="result"
-    ></div>
-
-  </div>
-
-
-  <script>
-
-    let scanner;
-
-    let checking = false;
-
-
-    function showResultValid(ticket) {
-
-      const result =
-        document.getElementById("result");
-
-      result.className =
-        "result valid";
-
-      result.innerHTML = `
-
-        <div class="result-icon">
-          ✅
-        </div>
-
-        <h2>
-          VALID TICKET
-        </h2>
-
-        <div class="ticket-info">
-
-          <div class="row">
-            <span>Ticket ID</span>
-            <span>${escapeHtml(ticket.ticketId)}</span>
-          </div>
-
-          <div class="row">
-            <span>Name</span>
-            <span>${escapeHtml(ticket.name)}</span>
-          </div>
-
-          <div class="row">
-            <span>Registration No.</span>
-            <span>${escapeHtml(ticket.studentRegNo)}</span>
-          </div>
-
-          <div class="row">
-            <span>Tickets</span>
-            <span>${escapeHtml(String(ticket.quantity))}</span>
-          </div>
-
-        </div>
-
-        <button onclick="scanAgain()">
-          SCAN NEXT TICKET
-        </button>
-      `;
-
-      result.scrollIntoView({
-        behavior: "smooth"
-      });
-
+      return;
     }
 
 
-    function showResultInvalid(message) {
+    if (data.alreadyUsed) {
 
       const result =
         document.getElementById("result");
@@ -289,198 +43,47 @@
       result.innerHTML = `
 
         <div class="result-icon">
-          ❌
+          ⚠️
         </div>
 
         <h2>
-          INVALID TICKET
+          ALREADY USED
         </h2>
 
         <p>
-          ${escapeHtml(message)}
+          This ticket has already been scanned.
         </p>
 
         <button onclick="scanAgain()">
-          SCAN AGAIN
+          SCAN NEXT TICKET
         </button>
+
       `;
 
       result.scrollIntoView({
         behavior: "smooth"
       });
 
+      return;
     }
 
 
-    async function verifyTicket(qrToken) {
+    showResultInvalid(
+      data.error ||
+      "This QR code is not valid."
+    );
 
-      if (checking) {
-        return;
-      }
 
-      checking = true;
+  } catch (error) {
 
-      try {
+    console.error(
+      error
+    );
 
-        const response =
-          await fetch(
-            "/api/verify-ticket?qr_token=" +
-            encodeURIComponent(qrToken)
-          );
+    showResultInvalid(
+      "Unable to verify this ticket. Check your internet connection."
+    );
 
-        const data =
-          await response.json();
+  }
 
-
-        if (
-          data.success &&
-          data.valid &&
-          data.ticket
-        ) {
-
-          showResultValid(
-            data.ticket
-          );
-
-        } else {
-
-          showResultInvalid(
-            data.error ||
-            "This QR code is not valid."
-          );
-
-        }
-
-      }
-
-      catch (error) {
-
-        console.error(
-          error
-        );
-
-        showResultInvalid(
-          "Unable to verify this ticket. Check your internet connection."
-        );
-
-      }
-
-    }
-
-
-    function onScanSuccess(decodedText) {
-
-      if (checking) {
-        return;
-      }
-
-      verifyTicket(decodedText);
-
-    }
-
-
-    function onScanFailure(error) {
-      // Ignore normal scanning failures.
-    }
-
-
-    function startScanner() {
-
-      scanner =
-        new Html5Qrcode(
-          "reader"
-        );
-
-
-      scanner.start(
-
-        {
-          facingMode:
-            "environment"
-        },
-
-        {
-          fps: 10,
-          qrbox: {
-            width: 250,
-            height: 250
-          }
-        },
-
-        onScanSuccess,
-        onScanFailure
-
-      ).catch(error => {
-
-        console.error(
-          "Camera error:",
-          error
-        );
-
-        document.getElementById(
-          "reader"
-        ).innerHTML = `
-
-          <div class="error">
-            Camera access could not be started.
-            Please allow camera permission in your browser.
-          </div>
-
-        `;
-
-      });
-
-    }
-
-
-    async function scanAgain() {
-
-      const result =
-        document.getElementById("result");
-
-      result.style.display =
-        "none";
-
-      checking = false;
-
-
-      try {
-
-        if (scanner) {
-
-          await scanner.stop();
-
-          await scanner.clear();
-
-        }
-
-      } catch (error) {
-
-        console.log(error);
-
-      }
-
-
-      startScanner();
-
-    }
-
-
-    function escapeHtml(value) {
-
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-    }
-
-
-    startScanner();
-
-  </script>
-
-</body>
-</html>
+}
