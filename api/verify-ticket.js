@@ -20,8 +20,12 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/registration?qr_token=eq.${encodeURIComponent(qrToken)}&select=id,full_name,student_reg_no,quantity,amount,payment_status,ticket_id,qr_token`,
+    /*
+      First check whether this QR belongs to a paid ticket.
+    */
+
+    const lookupResponse = await fetch(
+      `${SUPABASE_URL}/rest/v1/registration?qr_token=eq.${encodeURIComponent(qrToken)}&select=id,full_name,student_reg_no,quantity,amount,payment_status,ticket_id,used`,
       {
         method: "GET",
         headers: {
@@ -31,10 +35,10 @@ module.exports = async function handler(req, res) {
       }
     );
 
-    const text = await response.text();
+    const lookupText = await lookupResponse.text();
 
-    if (!response.ok) {
-      console.error("Supabase verification error:", text);
+    if (!lookupResponse.ok) {
+      console.error("Supabase lookup error:", lookupText);
 
       return res.status(500).json({
         success: false,
@@ -43,7 +47,7 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    const tickets = JSON.parse(text);
+    const tickets = JSON.parse(lookupText);
 
     if (!tickets.length) {
       return res.status(200).json({
@@ -59,7 +63,73 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({
         success: true,
         valid: false,
-        error: "Payment not completed"
+        error: "Payment has not been completed"
+      });
+    }
+
+    /*
+      If the ticket was already used,
+      do not allow entry again.
+    */
+
+    if (ticket.used === true) {
+      return res.status(200).json({
+        success: true,
+        valid: false,
+        alreadyUsed: true,
+        error: "This ticket has already been used"
+      });
+    }
+
+    /*
+      Mark the ticket as USED.
+
+      The condition used=eq.false prevents
+      the same ticket from being accepted twice
+      if two scanners scan it at almost the same time.
+    */
+
+    const updateResponse = await fetch(
+      `${SUPABASE_URL}/rest/v1/registration?id=eq.${ticket.id}&used=eq.false`,
+      {
+        method: "PATCH",
+        headers: {
+          apikey: SUPABASE_SECRET_KEY,
+          Authorization: `Bearer ${SUPABASE_SECRET_KEY}`,
+          "Content-Type": "application/json",
+          Prefer: "return=representation"
+        },
+        body: JSON.stringify({
+          used: true
+        })
+      }
+    );
+
+    const updateText = await updateResponse.text();
+
+    if (!updateResponse.ok) {
+      console.error("Supabase update error:", updateText);
+
+      return res.status(500).json({
+        success: false,
+        valid: false,
+        error: "Unable to mark ticket as used"
+      });
+    }
+
+    const updatedTickets = JSON.parse(updateText);
+
+    /*
+      If another scanner used the ticket first,
+      this update returns no row.
+    */
+
+    if (!updatedTickets.length) {
+      return res.status(200).json({
+        success: true,
+        valid: false,
+        alreadyUsed: true,
+        error: "This ticket has already been used"
       });
     }
 
