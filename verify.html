@@ -21,27 +21,26 @@
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 20px;
+      padding: 25px 15px;
     }
 
     .container {
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       text-align: center;
     }
 
     h1 {
-      margin: 0;
-      font-size: 30px;
-      letter-spacing: 3px;
+      margin: 10px 0 5px;
       color: #d8b66a;
+      letter-spacing: 4px;
+      font-size: 32px;
     }
 
     .subtitle {
-      margin: 8px 0 25px;
       color: #b9a985;
-      font-size: 14px;
+      margin-bottom: 25px;
+      line-height: 1.6;
     }
 
     .scanner-box {
@@ -49,7 +48,6 @@
       border: 1px solid #6e5225;
       border-radius: 18px;
       padding: 15px;
-      box-shadow: 0 0 30px rgba(180, 130, 40, 0.15);
     }
 
     #reader {
@@ -57,7 +55,15 @@
     }
 
     #reader video {
+      width: 100% !important;
       border-radius: 12px;
+    }
+
+    .status {
+      margin-top: 15px;
+      padding: 12px;
+      color: #c9a24d;
+      font-size: 14px;
     }
 
     .result {
@@ -65,142 +71,259 @@
       margin-top: 20px;
       padding: 25px;
       border-radius: 16px;
-      text-align: center;
     }
 
-    .result.valid {
+    .valid {
       display: block;
       background: #102415;
       border: 1px solid #4f9b62;
     }
 
-    .result.invalid {
+    .invalid {
       display: block;
       background: #2a0d0d;
       border: 1px solid #a94b4b;
     }
 
     .icon {
-      font-size: 48px;
+      font-size: 50px;
       margin-bottom: 10px;
     }
 
-    .result h2 {
-      margin: 8px 0;
+    h2 {
       letter-spacing: 2px;
     }
 
-    .result p {
-      margin: 8px 0;
-      color: #ddd;
+    .ticket-info {
+      text-align: left;
+      margin-top: 15px;
+      line-height: 1.9;
+    }
+
+    strong {
+      color: #d8b66a;
     }
 
     button {
-      margin-top: 18px;
+      margin-top: 20px;
       padding: 13px 22px;
       border: none;
       border-radius: 10px;
       background: #c9a24d;
       color: #120b08;
       font-weight: bold;
-      cursor: pointer;
-    }
-
-    .ticket-info {
-      margin-top: 15px;
-      text-align: left;
-      line-height: 1.8;
-    }
-
-    .ticket-info strong {
-      color: #d8b66a;
+      font-size: 14px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <h1>RANGREZ</h1>
+  <h1>RANGREZ</h1>
 
-    <div class="subtitle">
-      THE GARBA NIGHT 2K26<br>
-      TICKET VERIFICATION
-    </div>
-
-    <div class="scanner-box">
-      <div id="reader"></div>
-    </div>
-
-    <!-- IMPORTANT:
-         This is hidden when the scanner opens.
-         It only appears after a QR code is scanned.
-    -->
-    <div id="result" class="result"></div>
-
+  <div class="subtitle">
+    THE GARBA NIGHT 2K26<br>
+    TICKET VERIFICATION
   </div>
 
+  <div class="scanner-box">
+    <div id="reader"></div>
+  </div>
 
-  <script>
+  <div id="status" class="status">
+    Point the camera at a ticket QR code.
+  </div>
 
-    let checking = false;
-    let scanner = null;
+  <div id="result" class="result"></div>
+
+</div>
+
+<script>
+
+let scanner = null;
+let checking = false;
 
 
-    function escapeHtml(text) {
+function escapeHtml(text) {
 
-      return String(text || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+  return String(text || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
+}
+
+
+function showMessage(message) {
+
+  const result =
+    document.getElementById("result");
+
+  result.className = "result invalid";
+
+  result.innerHTML = `
+
+    <div class="icon">⚠️</div>
+
+    <h2>VERIFICATION ERROR</h2>
+
+    <p>${escapeHtml(message)}</p>
+
+    <button onclick="scanAgain()">
+      SCAN AGAIN
+    </button>
+
+  `;
+
+}
+
+
+function showValid(ticket) {
+
+  const result =
+    document.getElementById("result");
+
+  result.className = "result valid";
+
+  result.innerHTML = `
+
+    <div class="icon">✓</div>
+
+    <h2>VALID TICKET</h2>
+
+    <div class="ticket-info">
+
+      <div>
+        <strong>Ticket ID:</strong>
+        ${escapeHtml(ticket.ticketId)}
+      </div>
+
+      <div>
+        <strong>Name:</strong>
+        ${escapeHtml(ticket.name)}
+      </div>
+
+      <div>
+        <strong>Registration No:</strong>
+        ${escapeHtml(ticket.studentRegNo)}
+      </div>
+
+      <div>
+        <strong>Tickets:</strong>
+        ${escapeHtml(ticket.quantity)}
+      </div>
+
+      <div>
+        <strong>Amount:</strong>
+        ₹${escapeHtml(ticket.amount)}
+      </div>
+
+    </div>
+
+    <button onclick="scanAgain()">
+      SCAN NEXT TICKET
+    </button>
+
+  `;
+
+}
+
+
+async function verifyTicket(qrToken) {
+
+  if (checking) return;
+
+  checking = true;
+
+  document.getElementById("status").innerText =
+    "Checking ticket...";
+
+
+  try {
+
+    const response = await fetch(
+      "/api/verify-ticket?qr_token=" +
+      encodeURIComponent(qrToken),
+      {
+        method: "GET",
+        cache: "no-store"
+      }
+    );
+
+
+    const text =
+      await response.text();
+
+
+    console.log(
+      "Verification response:",
+      text
+    );
+
+
+    let data;
+
+
+    try {
+
+      data = JSON.parse(text);
+
+    } catch (error) {
+
+      showMessage(
+        "Server returned an invalid response: " +
+        text.substring(0, 200)
+      );
+
+      checking = false;
+
+      return;
     }
 
 
-    function showResultValid(ticket) {
+    if (
+      data.success &&
+      data.valid &&
+      data.ticket
+    ) {
+
+      stopScanner();
+
+      document.getElementById("status").innerText =
+        "Ticket verified successfully.";
+
+      showValid(data.ticket);
+
+      return;
+    }
+
+
+    if (data.alreadyUsed) {
+
+      stopScanner();
+
+      document.getElementById("status").innerText =
+        "This ticket was already scanned.";
 
       const result =
         document.getElementById("result");
 
-      result.className = "result valid";
+      result.className =
+        "result invalid";
 
       result.innerHTML = `
 
-        <div class="icon">✓</div>
+        <div class="icon">⚠️</div>
 
-        <h2>VALID TICKET</h2>
+        <h2>ALREADY USED</h2>
 
-        <div class="ticket-info">
-
-          <div>
-            <strong>Ticket ID:</strong>
-            ${escapeHtml(ticket.ticketId)}
-          </div>
-
-          <div>
-            <strong>Name:</strong>
-            ${escapeHtml(ticket.name)}
-          </div>
-
-          <div>
-            <strong>Registration No:</strong>
-            ${escapeHtml(ticket.studentRegNo)}
-          </div>
-
-          <div>
-            <strong>Tickets:</strong>
-            ${escapeHtml(ticket.quantity)}
-          </div>
-
-          <div>
-            <strong>Amount:</strong>
-            ₹${escapeHtml(ticket.amount)}
-          </div>
-
-        </div>
+        <p>
+          This ticket has already been scanned.
+        </p>
 
         <button onclick="scanAgain()">
           SCAN NEXT TICKET
@@ -208,231 +331,152 @@
 
       `;
 
-      result.scrollIntoView({
-        behavior: "smooth"
-      });
-
+      return;
     }
 
 
-    function showResultInvalid(message) {
+    stopScanner();
 
-      const result =
-        document.getElementById("result");
+    document.getElementById("status").innerText =
+      "Ticket verification failed.";
 
-      result.className = "result invalid";
-
-      result.innerHTML = `
-
-        <div class="icon">✕</div>
-
-        <h2>INVALID TICKET</h2>
-
-        <p>
-          ${escapeHtml(message)}
-        </p>
-
-        <button onclick="scanAgain()">
-          SCAN AGAIN
-        </button>
-
-      `;
-
-      result.scrollIntoView({
-        behavior: "smooth"
-      });
-
-    }
-
-
-    async function verifyTicket(qrToken) {
-
-      if (checking) {
-        return;
-      }
-
-      checking = true;
-
-      try {
-
-        const response =
-          await fetch(
-            "/api/verify-ticket?qr_token=" +
-            encodeURIComponent(qrToken)
-          );
-
-        const data =
-          await response.json();
-
-
-        if (
-          data.success &&
-          data.valid &&
-          data.ticket
-        ) {
-
-          stopScanner();
-
-          showResultValid(
-            data.ticket
-          );
-
-          return;
-        }
-
-
-        if (data.alreadyUsed) {
-
-          stopScanner();
-
-          const result =
-            document.getElementById("result");
-
-          result.className =
-            "result invalid";
-
-          result.innerHTML = `
-
-            <div class="icon">⚠️</div>
-
-            <h2>ALREADY USED</h2>
-
-            <p>
-              This ticket has already been scanned.
-            </p>
-
-            <button onclick="scanAgain()">
-              SCAN NEXT TICKET
-            </button>
-
-          `;
-
-          result.scrollIntoView({
-            behavior: "smooth"
-          });
-
-          return;
-        }
-
-
-        stopScanner();
-
-        showResultInvalid(
-          data.error ||
-          "This QR code is not valid."
-        );
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        stopScanner();
-
-        showResultInvalid(
-          "Unable to verify this ticket. Check your internet connection."
-        );
-
-      }
-
-    }
-
-
-    function stopScanner() {
-
-      if (scanner) {
-
-        scanner.stop()
-          .catch(() => {});
-
-      }
-
-    }
-
-
-    function startScanner() {
-
-      checking = false;
-
-      const result =
-        document.getElementById("result");
-
-      result.style.display = "none";
-      result.innerHTML = "";
-      result.className = "result";
-
-
-      scanner =
-        new Html5Qrcode("reader");
-
-
-      scanner.start(
-
-        {
-          facingMode: "environment"
-        },
-
-        {
-          fps: 10,
-          qrbox: {
-            width: 250,
-            height: 250
-          }
-        },
-
-        (decodedText) => {
-
-          if (!checking) {
-
-            verifyTicket(
-              decodedText
-            );
-
-          }
-
-        },
-
-        () => {}
-
-      ).catch(error => {
-
-        console.error(error);
-
-        showResultInvalid(
-          "Camera could not be started. Please allow camera permission."
-        );
-
-      });
-
-    }
-
-
-    function scanAgain() {
-
-      checking = false;
-
-      const result =
-        document.getElementById("result");
-
-      result.style.display = "none";
-      result.innerHTML = "";
-      result.className = "result";
-
-      document.getElementById("reader").innerHTML = "";
-
-      startScanner();
-
-    }
-
-
-    // Start with a completely clean scanner screen.
-    // NO ticket is checked automatically.
-    window.addEventListener(
-      "load",
-      startScanner
+    showMessage(
+      data.error ||
+      "This QR code is not valid."
     );
 
-  </script>
+  }
+
+  catch (error) {
+
+    console.error(
+      "Verification error:",
+      error
+    );
+
+    stopScanner();
+
+    document.getElementById("status").innerText =
+      "Connection error.";
+
+    showMessage(
+      "Unable to contact the ticket verification server."
+    );
+
+  }
+
+}
+
+
+function stopScanner() {
+
+  if (scanner) {
+
+    scanner.stop()
+      .catch(() => {});
+
+  }
+
+}
+
+
+function startScanner() {
+
+  checking = false;
+
+  document.getElementById("result").style.display =
+    "none";
+
+  document.getElementById("result").innerHTML =
+    "";
+
+  document.getElementById("status").innerText =
+    "Point the camera at a ticket QR code.";
+
+
+  document.getElementById("reader").innerHTML =
+    "";
+
+
+  scanner =
+    new Html5Qrcode("reader");
+
+
+  scanner.start(
+
+    {
+      facingMode: "environment"
+    },
+
+    {
+      fps: 10,
+      qrbox: {
+        width: 250,
+        height: 250
+      }
+    },
+
+    function(decodedText) {
+
+      console.log(
+        "QR detected:",
+        decodedText
+      );
+
+      if (!checking) {
+
+        verifyTicket(
+          decodedText
+        );
+
+      }
+
+    },
+
+    function(errorMessage) {
+
+      // Camera scanning errors are normal.
+      // Do not display them.
+
+    }
+
+  )
+
+  .catch(function(error) {
+
+    console.error(
+      "Camera error:",
+      error
+    );
+
+    showMessage(
+      "Camera could not start. Please allow camera permission."
+    );
+
+  });
+
+}
+
+
+function scanAgain() {
+
+  stopScanner();
+
+  startScanner();
+
+}
+
+
+window.addEventListener(
+  "load",
+  function() {
+
+    startScanner();
+
+  }
+);
+
+</script>
 
 </body>
 </html>
