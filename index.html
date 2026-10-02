@@ -11,8 +11,10 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=Cinzel:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Cashfree -->
   <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
+  <!-- QR Code -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
@@ -29,27 +31,23 @@
 
     body {
       background:
-        radial-gradient(circle at 20% 20%, rgba(173, 111, 22, 0.12), transparent 30%),
-        radial-gradient(circle at 80% 30%, rgba(117, 18, 18, 0.14), transparent 35%),
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(173,111,22,.12),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 80% 30%,
+          rgba(117,18,18,.14),
+          transparent 35%
+        ),
         #070505;
-      color: #f5e5bd;
-      font-family: "DM Sans", sans-serif;
-      overflow-x: hidden;
-    }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(
-          120deg,
-          transparent 0%,
-          rgba(255, 215, 140, 0.025) 50%,
-          transparent 100%
-        );
-      z-index: 20;
+      color: #f5e5bd;
+
+      font-family: "DM Sans", sans-serif;
+
+      overflow-x: hidden;
     }
 
 
@@ -59,454 +57,105 @@
 
     .hero {
       min-height: 100vh;
+
       position: relative;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       text-align: center;
+
       padding: 40px 20px;
+
       overflow: hidden;
 
       background:
         linear-gradient(
-          rgba(4, 2, 2, 0.48),
-          rgba(4, 2, 2, 0.86)
+          rgba(5,2,8,.34),
+          rgba(5,2,8,.80)
         ),
-        url("https://media.indulgexpress.com/indulgeexpress%2F2025-09-26%2F0zdll5pw%2FLively_lights.jpg?auto=format%2Ccompress&w=1800")
-        center / cover no-repeat;
+        url("https://images.news18.com/ibnlive/uploads/2025/09/Untitled-design-6-2025-09-87fde6cd821514b9f22c4fe0e99cdd8c-16x9.jpg")
+        center center / cover no-repeat;
+
+      animation:
+        heroZoom 18s ease-in-out infinite alternate;
     }
 
-    .hero::after {
+
+    @keyframes heroZoom {
+
+      from {
+        background-size: 100% auto;
+      }
+
+      to {
+        background-size: 108% auto;
+      }
+
+    }
+
+
+    /* Colorful cinematic lighting */
+
+    .hero::before {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
+
+      background:
+
+        radial-gradient(
+          circle at 15% 35%,
+          rgba(255,0,128,.18),
+          transparent 28%
+        ),
+
+        radial-gradient(
+          circle at 85% 30%,
+          rgba(0,150,255,.18),
+          transparent 28%
+        ),
+
+        radial-gradient(
+          circle at 50% 80%,
+          rgba(255,180,40,.14),
+          transparent 35%
+        );
+
+      mix-blend-mode: screen;
+
+      pointer-events: none;
+
+      z-index: 1;
+    }
+
+
+    /* Dark cinematic edges */
+
+    .hero::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
       background:
         radial-gradient(
           circle at center,
-          transparent 15%,
-          rgba(0,0,0,.62) 100%
+          transparent 12%,
+          rgba(0,0,0,.72) 100%
         );
+
       pointer-events: none;
-      z-index: 0;
-    }
 
-
-    /* =========================================
-       LUXURY DANDIYA ANIMATION
-    ========================================= */
-
-    .dandiya-scene {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .dandiya-glow {
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      left: 50%;
-      top: 58%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle,
-          rgba(210, 153, 57, .20),
-          rgba(120, 25, 18, .08) 45%,
-          transparent 70%
-        );
-
-      filter: blur(15px);
-
-      animation:
-        glowPulse 4s ease-in-out infinite;
-    }
-
-    @keyframes glowPulse {
-
-      0%, 100% {
-        transform: translate(-50%, -50%) scale(.9);
-        opacity: .55;
-      }
-
-      50% {
-        transform: translate(-50%, -50%) scale(1.12);
-        opacity: .9;
-      }
-
-    }
-
-
-    /* =========================================
-       DANCERS
-    ========================================= */
-
-    .dancer {
-      position: absolute;
-      bottom: -20px;
-      width: 170px;
-      height: 390px;
-
-      opacity: .40;
-
-      filter:
-        drop-shadow(
-          0 0 18px rgba(222, 169, 69, .25)
-        );
-    }
-
-    .dancer-left {
-      left: 7%;
-
-      transform:
-        scale(.95);
-
-      animation:
-        dancerLeft 4s ease-in-out infinite;
-    }
-
-    .dancer-right {
-      right: 7%;
-
-      transform:
-        scale(.95)
-        scaleX(-1);
-
-      animation:
-        dancerRight 4s ease-in-out infinite;
-    }
-
-
-    /* HEAD */
-
-    .dancer .head {
-      position: absolute;
-
-      width: 48px;
-      height: 48px;
-
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle at 35% 30%,
-          #f4d995,
-          #9d672d 70%
-        );
-
-      left: 61px;
-      top: 25px;
-
-      box-shadow:
-        0 0 20px rgba(219, 165, 66, .25);
-    }
-
-
-    /* BODY */
-
-    .dancer .body {
-      position: absolute;
-
-      left: 42px;
-      top: 70px;
-
-      width: 88px;
-      height: 180px;
-
-      background:
-        linear-gradient(
-          120deg,
-          #5b1714,
-          #b4772d 48%,
-          #541411
-        );
-
-      clip-path:
-        polygon(
-          30% 0,
-          70% 0,
-          100% 100%,
-          0 100%
-        );
-
-      border-radius:
-        25px 25px 10px 10px;
-
-      box-shadow:
-        0 0 25px rgba(201, 151, 58, .18);
-    }
-
-
-    /* ARMS */
-
-    .dancer .arm {
-      position: absolute;
-
-      width: 18px;
-      height: 125px;
-
-      border-radius: 20px;
-
-      background:
-        linear-gradient(
-          180deg,
-          #d79b54,
-          #70421f
-        );
-
-      transform-origin:
-        top center;
-    }
-
-    .dancer .arm-one {
-      left: 42px;
-      top: 82px;
-
-      transform:
-        rotate(52deg);
-
-      animation:
-        armOne 1.2s ease-in-out infinite alternate;
-    }
-
-    .dancer .arm-two {
-      right: 40px;
-      top: 82px;
-
-      transform:
-        rotate(-52deg);
-
-      animation:
-        armTwo 1.2s ease-in-out infinite alternate;
-    }
-
-    @keyframes armOne {
-
-      from {
-        transform:
-          rotate(48deg);
-      }
-
-      to {
-        transform:
-          rotate(68deg);
-      }
-
-    }
-
-    @keyframes armTwo {
-
-      from {
-        transform:
-          rotate(-48deg);
-      }
-
-      to {
-        transform:
-          rotate(-68deg);
-      }
-
-    }
-
-
-    /* =========================================
-       DANDIYA STICKS
-    ========================================= */
-
-    .dancer .stick {
-      position: absolute;
-
-      width: 9px;
-      height: 155px;
-
-      border-radius: 10px;
-
-      background:
-        linear-gradient(
-          90deg,
-          #8d5a22,
-          #f4d17e,
-          #a66e27
-        );
-
-      box-shadow:
-        0 0 12px rgba(242, 193, 91, .55);
-
-      transform-origin:
-        bottom center;
-    }
-
-    .dancer .stick-one {
-      left: 8px;
-      top: 18px;
-
-      transform:
-        rotate(48deg);
-
-      animation:
-        stickOne .75s ease-in-out infinite alternate;
-    }
-
-    .dancer .stick-two {
-      right: 8px;
-      top: 18px;
-
-      transform:
-        rotate(-48deg);
-
-      animation:
-        stickTwo .75s ease-in-out infinite alternate;
-    }
-
-    @keyframes stickOne {
-
-      from {
-        transform:
-          rotate(35deg);
-      }
-
-      to {
-        transform:
-          rotate(78deg);
-      }
-
-    }
-
-    @keyframes stickTwo {
-
-      from {
-        transform:
-          rotate(-35deg);
-      }
-
-      to {
-        transform:
-          rotate(-78deg);
-      }
-
-    }
-
-
-    /* DANCER MOVEMENT */
-
-    @keyframes dancerLeft {
-
-      0%, 100% {
-        transform:
-          translateY(0)
-          rotate(-2deg)
-          scale(.95);
-      }
-
-      50% {
-        transform:
-          translateY(-13px)
-          rotate(3deg)
-          scale(.98);
-      }
-
-    }
-
-    @keyframes dancerRight {
-
-      0%, 100% {
-        transform:
-          translateY(0)
-          rotate(2deg)
-          scale(.95)
-          scaleX(-1);
-      }
-
-      50% {
-        transform:
-          translateY(-13px)
-          rotate(-3deg)
-          scale(.98)
-          scaleX(-1);
-      }
-
-    }
-
-
-    /* =========================================
-       GOLDEN PARTICLES
-    ========================================= */
-
-    .spark {
-      position: absolute;
-
-      width: 4px;
-      height: 4px;
-
-      border-radius: 50%;
-
-      background: #e6bd69;
-
-      box-shadow:
-        0 0 12px #e6bd69;
-
-      animation:
-        sparkle 3s ease-in-out infinite;
-    }
-
-    .spark-1 {
-      left: 18%;
-      top: 28%;
-      animation-delay: .2s;
-    }
-
-    .spark-2 {
-      left: 31%;
-      top: 65%;
-      animation-delay: 1s;
-    }
-
-    .spark-3 {
-      right: 20%;
-      top: 31%;
-      animation-delay: 1.7s;
-    }
-
-    .spark-4 {
-      right: 34%;
-      top: 68%;
-      animation-delay: .7s;
-    }
-
-    .spark-5 {
-      left: 48%;
-      top: 20%;
-      animation-delay: 1.4s;
-    }
-
-    .spark-6 {
-      left: 58%;
-      top: 74%;
-      animation-delay: 2s;
-    }
-
-    @keyframes sparkle {
-
-      0%, 100% {
-        opacity: 0;
-
-        transform:
-          translateY(15px)
-          scale(.5);
-      }
-
-      50% {
-        opacity: .8;
-
-        transform:
-          translateY(-15px)
-          scale(1);
-      }
-
+      z-index: 2;
     }
 
 
@@ -515,61 +164,75 @@
     ========================================= */
 
     .hero-content {
+
       position: relative;
-      z-index: 2;
+
+      z-index: 5;
 
       max-width: 1000px;
 
       animation:
-        heroIn 1.5s ease forwards;
+        heroIn 1.4s ease forwards;
     }
+
 
     @keyframes heroIn {
 
       from {
         opacity: 0;
+
         transform:
           translateY(35px);
       }
 
       to {
         opacity: 1;
+
         transform:
           translateY(0);
       }
 
     }
 
+
     .college {
+
       font-family: "Cinzel", serif;
 
       font-size:
-        clamp(14px, 2vw, 20px);
+        clamp(14px,2vw,20px);
 
       letter-spacing: 7px;
 
       font-weight: 700;
 
-      color: #e8c982;
+      color: #f0d18b;
 
       margin-bottom: 15px;
+
+      text-shadow:
+        0 2px 15px #000;
     }
 
+
     .presents {
+
       font-size: 11px;
 
       letter-spacing: 6px;
 
-      color: #d9c8a1;
+      color: #e4d4b4;
 
       margin-bottom: 35px;
     }
 
+
     .rangrez {
+
       font-family: "Bodoni Moda", serif;
 
       font-size:
-        clamp(65px, 13vw, 155px);
+        clamp(65px,13vw,155px);
 
       line-height: .8;
 
@@ -577,53 +240,67 @@
 
       font-weight: 600;
 
-      color: #f3d58c;
+      color: #f4d68e;
 
       text-shadow:
-        0 0 25px rgba(241, 190, 86, .25),
-        0 5px 35px rgba(0,0,0,.7);
+        0 0 25px rgba(241,190,86,.35),
+        0 5px 35px rgba(0,0,0,.9);
     }
 
+
     .garba {
+
       font-family: "Cinzel", serif;
 
       font-size:
-        clamp(25px, 5vw, 58px);
+        clamp(25px,5vw,58px);
 
       letter-spacing:
-        clamp(5px, 1.4vw, 14px);
+        clamp(5px,1.4vw,14px);
 
       margin-top: 22px;
 
-      color: #fff1ce;
+      color: #fff3d4;
 
       font-weight: 600;
+
+      text-shadow:
+        0 3px 20px #000;
     }
 
+
     .year {
+
       font-family: "Bodoni Moda", serif;
 
       font-size:
-        clamp(30px, 6vw, 60px);
+        clamp(30px,6vw,60px);
 
       letter-spacing: 12px;
 
       margin-top: 12px;
 
-      color: #b98a3c;
+      color: #d3a957;
+
+      text-shadow:
+        0 3px 18px #000;
     }
 
+
     .presented {
+
       margin-top: 32px;
 
       font-size: 11px;
 
       letter-spacing: 4px;
 
-      color: #e7d5ae;
+      color: #f0dfbc;
     }
 
+
     .tagline {
+
       margin-top: 15px;
 
       font-family: "Bodoni Moda", serif;
@@ -632,10 +309,12 @@
 
       font-style: italic;
 
-      color: #f2d58f;
+      color: #f4d58e;
     }
 
+
     .event-meta {
+
       margin: 30px auto;
 
       display: flex;
@@ -647,17 +326,19 @@
       gap: 10px;
     }
 
+
     .meta-item {
+
       padding: 11px 18px;
 
       border:
-        1px solid rgba(220, 174, 83, .35);
+        1px solid rgba(220,174,83,.4);
 
       background:
-        rgba(0,0,0,.25);
+        rgba(0,0,0,.4);
 
       backdrop-filter:
-        blur(8px);
+        blur(10px);
 
       border-radius: 30px;
 
@@ -666,9 +347,14 @@
       letter-spacing: 1px;
 
       color: #f0dfba;
+
+      box-shadow:
+        0 8px 25px rgba(0,0,0,.25);
     }
 
+
     .cta {
+
       display: inline-block;
 
       margin-top: 15px;
@@ -676,7 +362,7 @@
       padding: 16px 34px;
 
       border:
-        1px solid #c99b4c;
+        1px solid #d3a552;
 
       color: #f5d68f;
 
@@ -691,10 +377,15 @@
       transition: .35s ease;
 
       background:
-        rgba(0,0,0,.3);
+        rgba(0,0,0,.4);
+
+      backdrop-filter:
+        blur(8px);
     }
 
+
     .cta:hover {
+
       background: #c99b4c;
 
       color: #090605;
@@ -703,18 +394,25 @@
         translateY(-3px);
 
       box-shadow:
-        0 12px 35px rgba(201,155,76,.2);
+        0 12px 35px rgba(201,155,76,.3);
     }
 
+
     .counter {
+
       margin-top: 25px;
 
       font-size: 13px;
 
       color: #d7c49b;
+
+      text-shadow:
+        0 2px 10px #000;
     }
 
+
     .counter strong {
+
       color: #f0ca78;
 
       font-size: 18px;
@@ -722,28 +420,33 @@
 
 
     /* =========================================
-       SECTIONS
+       GENERAL SECTIONS
     ========================================= */
 
     section {
+
       padding: 90px 20px;
 
       position: relative;
     }
 
+
     .section-inner {
+
       max-width: 1100px;
 
       margin: auto;
     }
 
+
     .section-title {
+
       text-align: center;
 
       font-family: "Cinzel", serif;
 
       font-size:
-        clamp(25px, 5vw, 44px);
+        clamp(25px,5vw,44px);
 
       letter-spacing: 5px;
 
@@ -752,7 +455,9 @@
       margin-bottom: 15px;
     }
 
+
     .section-subtitle {
+
       text-align: center;
 
       color: #9f9078;
@@ -770,15 +475,18 @@
     ========================================= */
 
     .details-grid {
+
       display: grid;
 
       grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4,1fr);
 
       gap: 18px;
     }
 
+
     .detail-card {
+
       padding: 30px 18px;
 
       border:
@@ -794,9 +502,23 @@
       text-align: center;
 
       border-radius: 4px;
+
+      transition: .3s;
     }
 
+
+    .detail-card:hover {
+
+      transform:
+        translateY(-5px);
+
+      border-color:
+        rgba(211,164,72,.4);
+    }
+
+
     .detail-card h3 {
+
       font-family: "Cinzel", serif;
 
       font-size: 12px;
@@ -808,7 +530,9 @@
       margin-bottom: 12px;
     }
 
+
     .detail-card p {
+
       font-size: 14px;
 
       color: #eadbbd;
@@ -818,19 +542,22 @@
 
 
     /* =========================================
-       TICKETS
+       TICKET SECTION
     ========================================= */
 
     .ticket-section {
+
       background:
         radial-gradient(
           circle at center,
-          rgba(112, 25, 19, .13),
+          rgba(112,25,19,.13),
           transparent 60%
         );
     }
 
+
     .ticket-box {
+
       max-width: 620px;
 
       margin: auto;
@@ -845,9 +572,14 @@
 
       box-shadow:
         0 25px 80px rgba(0,0,0,.45);
+
+      backdrop-filter:
+        blur(12px);
     }
 
+
     .price {
+
       text-align: center;
 
       font-family: "Bodoni Moda", serif;
@@ -859,7 +591,9 @@
       margin-bottom: 6px;
     }
 
+
     .price-label {
+
       text-align: center;
 
       color: #96866c;
@@ -871,7 +605,9 @@
       margin-bottom: 35px;
     }
 
+
     .availability {
+
       text-align: center;
 
       margin-bottom: 28px;
@@ -889,21 +625,28 @@
       color: #cdbb96;
     }
 
+
     .availability strong {
+
       color: #efd087;
     }
 
 
-    /* FORM */
+    /* =========================================
+       FORM
+    ========================================= */
 
     form {
+
       display: grid;
 
       gap: 14px;
     }
 
+
     input,
     select {
+
       width: 100%;
 
       padding: 15px;
@@ -918,21 +661,27 @@
       outline: none;
 
       font-family:
-        "DM Sans", sans-serif;
+        "DM Sans",sans-serif;
 
       border-radius: 2px;
     }
 
+
     input:focus,
     select:focus {
+
       border-color: #c99b4c;
     }
 
+
     input::placeholder {
+
       color: #746a59;
     }
 
+
     .total {
+
       display: flex;
 
       justify-content:
@@ -951,13 +700,17 @@
       color: #cbb996;
     }
 
+
     .total strong {
+
       color: #f2d18a;
 
       font-size: 18px;
     }
 
+
     button {
+
       padding: 17px;
 
       border:
@@ -973,7 +726,7 @@
       color: #100b06;
 
       font-family:
-        "Cinzel", serif;
+        "Cinzel",serif;
 
       font-size: 12px;
 
@@ -986,7 +739,9 @@
       transition: .3s;
     }
 
+
     button:hover {
+
       transform:
         translateY(-2px);
 
@@ -994,7 +749,9 @@
         0 10px 30px rgba(201,155,76,.2);
     }
 
+
     button:disabled {
+
       opacity: .5;
 
       cursor: not-allowed;
@@ -1003,9 +760,8 @@
     }
 
 
-    /* MESSAGE */
-
     .message {
+
       display: none;
 
       padding: 14px;
@@ -1024,10 +780,11 @@
 
 
     /* =========================================
-       TICKET
+       GENERATED TICKET
     ========================================= */
 
     .ticket-result {
+
       display: none;
 
       max-width: 620px;
@@ -1038,9 +795,11 @@
         ticketIn .8s ease;
     }
 
+
     @keyframes ticketIn {
 
       from {
+
         opacity: 0;
 
         transform:
@@ -1048,6 +807,7 @@
       }
 
       to {
+
         opacity: 1;
 
         transform:
@@ -1056,7 +816,9 @@
 
     }
 
+
     .ticket-card {
+
       background: #f3ead5;
 
       color: #18120d;
@@ -1069,7 +831,9 @@
         0 25px 80px rgba(0,0,0,.55);
     }
 
+
     .ticket-top {
+
       padding: 28px 25px;
 
       text-align: center;
@@ -1087,7 +851,9 @@
         2px solid #bd8d3e;
     }
 
+
     .ticket-top small {
+
       display: block;
 
       font-size: 10px;
@@ -1099,36 +865,46 @@
       color: #d7c49d;
     }
 
+
     .ticket-top h2 {
-      font-family: "Cinzel", serif;
+
+      font-family: "Cinzel",serif;
 
       font-size: 21px;
 
       letter-spacing: 2px;
     }
 
+
     .ticket-top p {
+
       margin-top: 8px;
 
       font-family:
-        "Bodoni Moda", serif;
+        "Bodoni Moda",serif;
 
       font-size: 15px;
 
       color: #e9c77f;
     }
 
+
     .ticket-body {
+
       padding: 30px 25px;
     }
 
+
     .ticket-info {
+
       display: grid;
 
       gap: 14px;
     }
 
+
     .ticket-row {
+
       display: flex;
 
       justify-content:
@@ -1144,11 +920,15 @@
       font-size: 13px;
     }
 
+
     .ticket-row span:first-child {
+
       color: #766552;
     }
 
+
     .ticket-row span:last-child {
+
       font-weight: 700;
 
       text-align: right;
@@ -1156,13 +936,17 @@
       color: #20160f;
     }
 
+
     .qr-area {
+
       text-align: center;
 
       padding: 25px 0 10px;
     }
 
+
     #qrcode {
+
       display: inline-block;
 
       padding: 10px;
@@ -1170,7 +954,9 @@
       background: white;
     }
 
+
     .qr-note {
+
       margin-top: 12px;
 
       font-size: 11px;
@@ -1178,7 +964,9 @@
       color: #766552;
     }
 
+
     .ticket-id {
+
       text-align: center;
 
       margin-top: 18px;
@@ -1196,7 +984,9 @@
       letter-spacing: 1px;
     }
 
+
     .print-ticket {
+
       width: 100%;
 
       margin-top: 18px;
@@ -1214,6 +1004,7 @@
     ========================================= */
 
     footer {
+
       padding: 50px 20px;
 
       text-align: center;
@@ -1222,8 +1013,10 @@
         1px solid rgba(220,175,85,.12);
     }
 
+
     footer h3 {
-      font-family: "Cinzel", serif;
+
+      font-family: "Cinzel",serif;
 
       color: #dcb66d;
 
@@ -1232,7 +1025,9 @@
       margin-bottom: 15px;
     }
 
+
     footer p {
+
       color: #756a58;
 
       font-size: 12px;
@@ -1240,7 +1035,9 @@
       line-height: 1.8;
     }
 
+
     .helpline {
+
       margin-top: 12px;
 
       color: #bca77f;
@@ -1248,80 +1045,86 @@
 
 
     /* =========================================
-       RESPONSIVE
+       MOBILE
     ========================================= */
 
-    @media (max-width: 800px) {
+    @media (max-width:800px) {
 
       .details-grid {
+
         grid-template-columns:
-          repeat(2, 1fr);
+          repeat(2,1fr);
+      }
+
+      .hero {
+
+        background-position:
+          center center;
       }
 
     }
 
 
-    @media (max-width: 600px) {
-
-      .dancer {
-        opacity: .28;
-
-        transform:
-          scale(.65);
-      }
-
-      .dancer-left {
-        left: -35px;
-      }
-
-      .dancer-right {
-        right: -35px;
-      }
-
-      .dandiya-glow {
-        width: 350px;
-        height: 350px;
-      }
-
-    }
-
-
-    @media (max-width: 520px) {
+    @media (max-width:520px) {
 
       .college {
+
         letter-spacing: 4px;
       }
+
 
       .presents {
+
         letter-spacing: 4px;
       }
 
+
       .rangrez {
+
         font-size: 67px;
       }
 
+
       .garba {
+
         font-size: 25px;
 
         letter-spacing: 5px;
       }
 
+
       .details-grid {
+
         grid-template-columns: 1fr;
       }
 
+
       .ticket-box {
+
         padding: 30px 18px;
       }
 
+
       .event-meta {
+
         flex-direction: column;
 
         align-items: center;
       }
 
+
       .meta-item {
+
         width: fit-content;
+      }
+
+
+      .hero {
+
+        min-height: 100svh;
+
+        background-position:
+          center center;
       }
 
     }
@@ -1334,18 +1137,24 @@
     @media print {
 
       body * {
+
         visibility: hidden;
       }
 
+
       .ticket-result,
       .ticket-result * {
+
         visibility: visible;
       }
 
+
       .ticket-result {
+
         position: absolute;
 
         left: 0;
+
         top: 0;
 
         width: 100%;
@@ -1353,11 +1162,15 @@
         margin: 0;
       }
 
+
       .print-ticket {
+
         display: none;
       }
 
+
       .ticket-card {
+
         box-shadow: none;
       }
 
@@ -1375,62 +1188,6 @@
   ========================================= -->
 
   <header class="hero">
-
-
-    <!-- LUXURY DANDIYA ANIMATION -->
-
-    <div class="dandiya-scene">
-
-      <div class="dandiya-glow"></div>
-
-
-      <div class="dancer dancer-left">
-
-        <div class="head"></div>
-
-        <div class="body"></div>
-
-        <div class="arm arm-one"></div>
-
-        <div class="arm arm-two"></div>
-
-        <div class="stick stick-one"></div>
-
-        <div class="stick stick-two"></div>
-
-      </div>
-
-
-      <div class="dancer dancer-right">
-
-        <div class="head"></div>
-
-        <div class="body"></div>
-
-        <div class="arm arm-one"></div>
-
-        <div class="arm arm-two"></div>
-
-        <div class="stick stick-one"></div>
-
-        <div class="stick stick-two"></div>
-
-      </div>
-
-
-      <!-- GOLD PARTICLES -->
-
-      <span class="spark spark-1"></span>
-      <span class="spark spark-2"></span>
-      <span class="spark spark-3"></span>
-      <span class="spark spark-4"></span>
-      <span class="spark spark-5"></span>
-      <span class="spark spark-6"></span>
-
-    </div>
-
-
-    <!-- HERO CONTENT -->
 
     <div class="hero-content">
 
@@ -1517,7 +1274,7 @@
 
 
   <!-- =========================================
-       DETAILS
+       EXPERIENCE
   ========================================= -->
 
   <section>
@@ -1767,7 +1524,6 @@
 
           <div class="ticket-top">
 
-
             <small>
               OFFICIAL ENTRY PASS
             </small>
@@ -1781,7 +1537,6 @@
             <p>
               Feel the Beat • Live the Colours
             </p>
-
 
           </div>
 
@@ -1880,14 +1635,11 @@
 
             <div class="qr-area">
 
-
               <div id="qrcode"></div>
-
 
               <div class="qr-note">
                 Show this QR code at the entrance.
               </div>
-
 
             </div>
 
@@ -1909,9 +1661,7 @@
 
           </div>
 
-
         </div>
-
 
       </div>
 
@@ -1927,7 +1677,6 @@
   ========================================= -->
 
   <footer>
-
 
     <h3>
       RANGREZ 2K26
@@ -1945,11 +1694,11 @@
 
 
     <p class="helpline">
-      Helpline: +91 99013 89490
+      Helpline:
+      +91 99013 89490
       &nbsp; | &nbsp;
       +91 84315 29176
     </p>
-
 
   </footer>
 
@@ -1957,11 +1706,9 @@
 
   <!-- =========================================
        JAVASCRIPT
-       EXISTING PAYMENT / TICKET SYSTEM
   ========================================= -->
 
   <script>
-
 
     const PRICE = 399;
 
@@ -2022,7 +1769,6 @@
       type = "normal"
     ) {
 
-
       message.style.display =
         "block";
 
@@ -2067,7 +1813,6 @@
 
     function updateTotal() {
 
-
       const qty =
         Number(
           quantity.value
@@ -2091,9 +1836,7 @@
 
     async function loadCount() {
 
-
       try {
-
 
         const response =
           await fetch(
@@ -2128,21 +1871,17 @@
 
         if (remaining <= 0) {
 
-
           paymentButton.disabled =
             true;
-
 
           paymentButton.textContent =
             "TICKETS SOLD OUT";
 
         }
 
-
       }
 
       catch (error) {
-
 
         console.error(
           "Count error:",
@@ -2158,7 +1897,6 @@
     async function startPayment(
       event
     ) {
-
 
       event.preventDefault();
 
@@ -2213,9 +1951,7 @@
         );
 
 
-
       try {
-
 
         const countResponse =
           await fetch(
@@ -2260,14 +1996,11 @@
             "/api/create-order",
             {
 
-              method:
-                "POST",
+              method: "POST",
 
               headers: {
-
                 "Content-Type":
                   "application/json"
-
               },
 
               body:
@@ -2281,8 +2014,7 @@
 
                   email,
 
-                  quantity:
-                    qty
+                  quantity: qty
 
                 })
 
@@ -2320,10 +2052,7 @@
 
         const cashfree =
           Cashfree({
-
-            mode:
-              "sandbox"
-
+            mode: "sandbox"
           });
 
 
@@ -2347,7 +2076,6 @@
       }
 
       catch (error) {
-
 
         console.error(
           "Payment error:",
@@ -2387,7 +2115,6 @@
 
     async function verifyReturnedPayment() {
 
-
       const params =
         new URLSearchParams(
           window.location.search
@@ -2416,27 +2143,18 @@
       }
 
 
-      window.scrollTo({
-
-        top:
-          document
-            .getElementById(
-              "tickets"
-            )
-            .offsetTop,
-
-        behavior:
-          "smooth"
-
-      });
+      document
+        .getElementById(
+          "tickets"
+        )
+        .scrollIntoView({
+          behavior: "smooth"
+        });
 
 
       showMessage(
-
         "Payment completed. Confirming your ticket...",
-
         "normal"
-
       );
 
 
@@ -2448,23 +2166,18 @@
         "VERIFYING PAYMENT...";
 
 
-      let attempts =
-        0;
+      let attempts = 0;
 
-
-      const maxAttempts =
-        10;
+      const maxAttempts = 10;
 
 
 
       async function checkStatus() {
 
-
         attempts++;
 
 
         try {
-
 
           const response =
             await fetch(
@@ -2487,11 +2200,9 @@
             data.status === "PAID"
           ) {
 
-
             showTicket(
               data
             );
-
 
             return;
 
@@ -2504,13 +2215,9 @@
             attempts < maxAttempts
           ) {
 
-
             showMessage(
-
               "Payment is being confirmed. Please wait...",
-
               "normal"
-
             );
 
 
@@ -2528,7 +2235,6 @@
           if (
             data.status === "FAILED"
           ) {
-
 
             showMessage(
 
@@ -2553,23 +2259,17 @@
 
 
           throw new Error(
-
             data.error ||
             "Unable to verify payment."
-
           );
-
 
         }
 
         catch (error) {
 
-
           console.error(
-
             "Verification error:",
             error
-
           );
 
 
@@ -2577,13 +2277,9 @@
             attempts < maxAttempts
           ) {
 
-
             showMessage(
-
               "Confirming your payment...",
-
               "normal"
-
             );
 
 
@@ -2592,11 +2288,9 @@
               3000
             );
 
-
           }
 
           else {
-
 
             showMessage(
 
@@ -2631,13 +2325,11 @@
       data
     ) {
 
-
       const registration =
         data.registration;
 
 
       if (!registration) {
-
 
         showMessage(
 
@@ -2647,7 +2339,6 @@
 
         );
 
-
         return;
 
       }
@@ -2656,15 +2347,13 @@
       document.getElementById(
         "ticketName"
       ).textContent =
-        registration.full_name ||
-        "";
+        registration.full_name || "";
 
 
       document.getElementById(
         "ticketRegNo"
       ).textContent =
-        registration.student_reg_no ||
-        "";
+        registration.student_reg_no || "";
 
 
       document.getElementById(
@@ -2702,7 +2391,6 @@
         typeof QRCode !== "undefined" &&
         data.qrToken
       ) {
-
 
         new QRCode(
 
@@ -2765,9 +2453,7 @@
 
     verifyReturnedPayment();
 
-
   </script>
-
 
 </body>
 </html>
