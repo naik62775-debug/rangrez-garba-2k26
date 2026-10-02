@@ -317,7 +317,7 @@ module.exports = async function handler(req, res) {
               payment_status:
                 "pending",
 
-              cashfree_order_id:
+              razorpay_order_id:
                 razorpayData.id
 
             })
