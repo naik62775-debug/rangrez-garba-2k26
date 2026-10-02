@@ -1,8 +1,10 @@
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
 
-const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID;
-const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY;
+const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID;
+const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
+
+const { createHmac, randomUUID } = require("crypto");
 
 module.exports = async function handler(req, res) {
 
@@ -16,127 +18,134 @@ module.exports = async function handler(req, res) {
   try {
 
     const orderId = req.query.order_id;
+    const paymentId = req.query.payment_id;
+    const signature = req.query.signature;
 
-    if (!orderId) {
+    if (!orderId || !paymentId || !signature) {
       return res.status(400).json({
         success: false,
-        error: "Order ID is required"
+        error: "Payment verification details are required"
       });
     }
 
-
-    /* =========================
-       CHECK ENVIRONMENT
-    ========================= */
-
-    if (
-      !SUPABASE_URL ||
-      !SUPABASE_SECRET_KEY
-    ) {
+    if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) {
       return res.status(500).json({
         success: false,
         error: "Supabase is not configured"
       });
     }
 
-
-    if (
-      !CASHFREE_APP_ID ||
-      !CASHFREE_SECRET_KEY
-    ) {
+    if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
       return res.status(500).json({
         success: false,
-        error: "Cashfree is not configured"
+        error: "Razorpay is not configured"
       });
     }
 
+    /* Verify Razorpay signature */
 
-    /* =========================
-       GET PAYMENT STATUS
-    ========================= */
+    const expectedSignature =
+      createHmac(
+        "sha256",
+        RAZORPAY_KEY_SECRET
+      )
+        .update(
+          orderId + "|" + paymentId
+        )
+        .digest("hex");
 
-    const cashfreeResponse =
+    if (expectedSignature !== signature) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid payment signature"
+      });
+    }
+
+    /* Razorpay authentication */
+
+    const auth =
+      Buffer
+        .from(
+          `${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`
+        )
+        .toString("base64");
+
+    /* Get order */
+
+    const orderResponse =
       await fetch(
-        `https://sandbox.cashfree.com/pg/orders/${encodeURIComponent(orderId)}/payments`,
+        `https://api.razorpay.com/v1/orders/${encodeURIComponent(orderId)}`,
         {
           method: "GET",
-
           headers: {
-            "x-client-id":
-              CASHFREE_APP_ID,
-
-            "x-client-secret":
-              CASHFREE_SECRET_KEY,
-
-            "x-api-version":
-              "2025-01-01",
-
-            "Accept":
+            Authorization:
+              `Basic ${auth}`,
+            Accept:
               "application/json"
           }
         }
       );
 
+    const orderText =
+      await orderResponse.text();
 
-    const cashfreeText =
-      await cashfreeResponse.text();
-
-
-    if (!cashfreeResponse.ok) {
-
+    if (!orderResponse.ok) {
       console.error(
-        "Cashfree verification error:",
-        cashfreeText
+        "Razorpay order error:",
+        orderText
       );
 
-      return res.status(
-        cashfreeResponse.status
-      ).json({
+      return res.status(500).json({
         success: false,
-        error:
-          "Unable to verify payment"
+        error: "Unable to verify Razorpay order"
       });
-
     }
 
+    const order =
+      JSON.parse(orderText);
 
-    const payments =
-      JSON.parse(
-        cashfreeText
+    /* Get payments */
+
+    const paymentsResponse =
+      await fetch(
+        `https://api.razorpay.com/v1/orders/${encodeURIComponent(orderId)}/payments`,
+        {
+          method: "GET",
+          headers: {
+            Authorization:
+              `Basic ${auth}`,
+            Accept:
+              "application/json"
+          }
+        }
       );
 
+    const paymentsText =
+      await paymentsResponse.text();
 
-    /* =========================
-       FIND SUCCESSFUL PAYMENT
-    ========================= */
+    if (!paymentsResponse.ok) {
+      console.error(
+        "Razorpay payment error:",
+        paymentsText
+      );
+
+      return res.status(500).json({
+        success: false,
+        error: "Unable to verify payment"
+      });
+    }
+
+    const paymentsData =
+      JSON.parse(paymentsText);
 
     const successfulPayment =
-      payments.find(
+      (paymentsData.items || []).find(
         payment =>
-          payment.payment_status ===
-          "SUCCESS"
+          payment.id === paymentId &&
+          payment.status === "captured"
       );
 
-
     if (!successfulPayment) {
-
-      const pendingPayment =
-        payments.find(
-          payment =>
-            payment.payment_status ===
-            "PENDING"
-        );
-
-
-      if (pendingPayment) {
-
-        return res.status(200).json({
-          success: true,
-          status: "PENDING"
-        });
-
-      }
-
 
       return res.status(200).json({
         success: true,
@@ -145,37 +154,26 @@ module.exports = async function handler(req, res) {
 
     }
 
-
-    /* =========================
-       FIND REGISTRATION
-    ========================= */
+    /* Find registration */
 
     const registrationResponse =
       await fetch(
         `${SUPABASE_URL}/rest/v1/registration?cashfree_order_id=eq.${encodeURIComponent(orderId)}&select=*`,
         {
           method: "GET",
-
           headers: {
             apikey:
               SUPABASE_SECRET_KEY,
-
             Authorization:
-              `Bearer ${SUPABASE_SECRET_KEY}`,
-
-            "Content-Type":
-              "application/json"
+              `Bearer ${SUPABASE_SECRET_KEY}`
           }
         }
       );
 
-
     const registrationText =
       await registrationResponse.text();
 
-
     if (!registrationResponse.ok) {
-
       console.error(
         "Registration lookup error:",
         registrationText
@@ -183,44 +181,47 @@ module.exports = async function handler(req, res) {
 
       return res.status(500).json({
         success: false,
-        error:
-          "Unable to find registration"
+        error: "Unable to find registration"
       });
-
     }
-
 
     const registrations =
       JSON.parse(
         registrationText
       );
 
-
     if (
       !registrations ||
       registrations.length === 0
     ) {
-
       return res.status(404).json({
         success: false,
-        error:
-          "Registration not found"
+        error: "Registration not found"
       });
-
     }
-
 
     const registration =
       registrations[0];
 
+    /* Verify amount */
 
-    /* =========================
-       ALREADY PAID?
-    ========================= */
+    const expectedAmount =
+      Number(registration.amount) * 100;
 
     if (
-      registration.payment_status ===
-      "paid" &&
+      Number(order.amount) !==
+      expectedAmount
+    ) {
+      return res.status(400).json({
+        success: false,
+        error: "Payment amount does not match registration amount"
+      });
+    }
+
+    /* Ticket already generated */
+
+    if (
+      registration.payment_status === "paid" &&
       registration.ticket_id
     ) {
 
@@ -243,32 +244,23 @@ module.exports = async function handler(req, res) {
 
     }
 
-
-    /* =========================
-       CREATE TICKET ID
-    ========================= */
+    /* Generate ticket */
 
     const ticketId =
       "RZ26-" +
-      Date.now().toString(36).toUpperCase() +
+      Date.now()
+        .toString(36)
+        .toUpperCase() +
       "-" +
       Math.random()
         .toString(36)
         .substring(2, 7)
         .toUpperCase();
 
-
-    /* =========================
-       CREATE QR TOKEN
-    ========================= */
-
     const qrToken =
-      crypto.randomUUID();
+      randomUUID();
 
-
-    /* =========================
-       UPDATE REGISTRATION
-    ========================= */
+    /* Update registration */
 
     const updateResponse =
       await fetch(
@@ -277,7 +269,6 @@ module.exports = async function handler(req, res) {
           method: "PATCH",
 
           headers: {
-
             apikey:
               SUPABASE_SECRET_KEY,
 
@@ -289,7 +280,6 @@ module.exports = async function handler(req, res) {
 
             Prefer:
               "return=representation"
-
           },
 
           body:
@@ -305,14 +295,11 @@ module.exports = async function handler(req, res) {
                 qrToken
 
             })
-
         }
       );
 
-
     const updateText =
       await updateResponse.text();
-
 
     if (!updateResponse.ok) {
 
@@ -329,16 +316,8 @@ module.exports = async function handler(req, res) {
 
     }
 
-
     const updatedRegistration =
-      JSON.parse(
-        updateText
-      );
-
-
-    /* =========================
-       SUCCESS
-    ========================= */
+      JSON.parse(updateText);
 
     return res.status(200).json({
 
@@ -353,15 +332,12 @@ module.exports = async function handler(req, res) {
         qrToken,
 
       transactionId:
-        successfulPayment.cf_payment_id ||
-        successfulPayment.payment_id ||
-        null,
+        paymentId,
 
       registration:
         updatedRegistration[0]
 
     });
-
 
   } catch (error) {
 
@@ -370,14 +346,9 @@ module.exports = async function handler(req, res) {
       error
     );
 
-
     return res.status(500).json({
-
       success: false,
-
-      error:
-        "Server error"
-
+      error: "Server error"
     });
 
   }
