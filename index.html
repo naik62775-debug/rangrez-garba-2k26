@@ -18,7 +18,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -39,8 +38,6 @@
       overflow-x: hidden;
     }
 
-    /* HERO */
-
     .hero {
       min-height: 100vh;
       position: relative;
@@ -52,10 +49,7 @@
       overflow: hidden;
 
       background:
-        linear-gradient(
-          rgba(5,2,8,.34),
-          rgba(5,2,8,.80)
-        ),
+        linear-gradient(rgba(5,2,8,.34), rgba(5,2,8,.80)),
         url("https://images.news18.com/ibnlive/uploads/2025/09/Untitled-design-6-2025-09-87fde6cd821514b9f22c4fe0e99cdd8c-16x9.jpg")
         center center / cover no-repeat;
 
@@ -213,10 +207,13 @@
       border: 1px solid #d3a552;
       color: #f5d68f;
       text-decoration: none;
+
       font-family: "Cinzel", serif;
       font-size: 12px;
       letter-spacing: 3px;
+
       transition: .35s ease;
+
       background: rgba(0,0,0,.4);
       backdrop-filter: blur(8px);
     }
@@ -239,8 +236,6 @@
       color: #f0ca78;
       font-size: 18px;
     }
-
-    /* SECTIONS */
 
     section {
       padding: 90px 20px;
@@ -269,8 +264,6 @@
       letter-spacing: 2px;
     }
 
-    /* DETAILS */
-
     .details-grid {
       display: grid;
       grid-template-columns: repeat(4,1fr);
@@ -279,6 +272,7 @@
 
     .detail-card {
       padding: 30px 18px;
+
       border: 1px solid rgba(211,164,72,.18);
 
       background:
@@ -312,8 +306,6 @@
       line-height: 1.6;
     }
 
-    /* TICKETS */
-
     .ticket-section {
       background:
         radial-gradient(
@@ -326,10 +318,16 @@
     .ticket-box {
       max-width: 620px;
       margin: auto;
+
       border: 1px solid rgba(216,169,77,.35);
+
       padding: 38px 28px;
+
       background: rgba(8,5,4,.75);
-      box-shadow: 0 25px 80px rgba(0,0,0,.45);
+
+      box-shadow:
+        0 25px 80px rgba(0,0,0,.45);
+
       backdrop-filter: blur(12px);
     }
 
@@ -353,8 +351,11 @@
       text-align: center;
       margin-bottom: 28px;
       padding: 13px;
+
       border: 1px solid rgba(211,164,72,.18);
+
       background: rgba(255,255,255,.02);
+
       font-size: 13px;
       color: #cdbb96;
     }
@@ -363,27 +364,29 @@
       color: #efd087;
     }
 
-    /* FORM */
-
     form {
       display: grid;
       gap: 14px;
     }
 
-    input,
-    select {
+    input {
       width: 100%;
       padding: 15px;
+
       background: #0e0a08;
+
       border: 1px solid rgba(220,175,85,.2);
+
       color: #f4e6c5;
+
       outline: none;
+
       font-family: "DM Sans",sans-serif;
+
       border-radius: 2px;
     }
 
-    input:focus,
-    select:focus {
+    input:focus {
       border-color: #c99b4c;
     }
 
@@ -391,13 +394,34 @@
       color: #746a59;
     }
 
+    .single-ticket {
+      width: 100%;
+      padding: 15px;
+
+      background: #0e0a08;
+
+      border: 1px solid rgba(220,175,85,.2);
+
+      color: #f4e6c5;
+
+      text-align: center;
+
+      font-family: "DM Sans",sans-serif;
+
+      font-size: 14px;
+    }
+
     .total {
       display: flex;
       justify-content: space-between;
+
       padding: 16px 0;
+
       border-top: 1px solid rgba(220,175,85,.15);
       border-bottom: 1px solid rgba(220,175,85,.15);
+
       margin-top: 4px;
+
       color: #cbb996;
     }
 
@@ -408,6 +432,7 @@
 
     button {
       padding: 17px;
+
       border: 1px solid #c99b4c;
 
       background:
@@ -418,17 +443,23 @@
         );
 
       color: #100b06;
+
       font-family: "Cinzel",serif;
+
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 2px;
+
       cursor: pointer;
+
       transition: .3s;
     }
 
     button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(201,155,76,.2);
+
+      box-shadow:
+        0 10px 30px rgba(201,155,76,.2);
     }
 
     button:disabled {
@@ -439,20 +470,27 @@
 
     .message {
       display: none;
+
       padding: 14px;
+
       text-align: center;
+
       margin-top: 15px;
+
       font-size: 13px;
+
       line-height: 1.5;
+
       border: 1px solid rgba(220,175,85,.2);
     }
 
-    /* TICKET */
-
     .ticket-result {
       display: none;
+
       max-width: 620px;
+
       margin: 45px auto 0;
+
       animation: ticketIn .8s ease;
     }
 
@@ -471,13 +509,18 @@
     .ticket-card {
       background: #f3ead5;
       color: #18120d;
+
       border-radius: 8px;
+
       overflow: hidden;
-      box-shadow: 0 25px 80px rgba(0,0,0,.55);
+
+      box-shadow:
+        0 25px 80px rgba(0,0,0,.55);
     }
 
     .ticket-top {
       padding: 28px 25px;
+
       text-align: center;
 
       background:
@@ -488,27 +531,37 @@
         );
 
       color: #f2d28c;
+
       border-bottom: 2px solid #bd8d3e;
     }
 
     .ticket-top small {
       display: block;
+
       font-size: 10px;
+
       letter-spacing: 4px;
+
       margin-bottom: 10px;
+
       color: #d7c49d;
     }
 
     .ticket-top h2 {
       font-family: "Cinzel",serif;
+
       font-size: 21px;
+
       letter-spacing: 2px;
     }
 
     .ticket-top p {
       margin-top: 8px;
+
       font-family: "Bodoni Moda",serif;
+
       font-size: 15px;
+
       color: #e9c77f;
     }
 
@@ -523,10 +576,15 @@
 
     .ticket-row {
       display: flex;
+
       justify-content: space-between;
+
       gap: 15px;
+
       border-bottom: 1px dashed rgba(40,25,15,.2);
+
       padding-bottom: 10px;
+
       font-size: 13px;
     }
 
@@ -536,73 +594,95 @@
 
     .ticket-row span:last-child {
       font-weight: 700;
+
       text-align: right;
+
       color: #20160f;
     }
 
     .qr-area {
       text-align: center;
+
       padding: 25px 0 10px;
     }
 
     #qrcode {
       display: inline-block;
+
       padding: 10px;
+
       background: white;
     }
 
     .qr-note {
       margin-top: 12px;
+
       font-size: 11px;
+
       color: #766552;
     }
 
     .ticket-id {
       text-align: center;
+
       margin-top: 18px;
+
       padding: 13px;
+
       background: #e7dcc2;
+
       font-family: monospace;
+
       font-size: 14px;
+
       font-weight: bold;
+
       letter-spacing: 1px;
     }
 
     .print-ticket {
       width: 100%;
+
       margin-top: 18px;
+
       background: #17100b;
+
       color: #f2d28c;
+
       border-color: #17100b;
     }
 
-    /* FOOTER */
-
     footer {
       padding: 50px 20px;
+
       text-align: center;
+
       border-top: 1px solid rgba(220,175,85,.12);
     }
 
     footer h3 {
       font-family: "Cinzel",serif;
+
       color: #dcb66d;
+
       letter-spacing: 3px;
+
       margin-bottom: 15px;
     }
 
     footer p {
       color: #756a58;
+
       font-size: 12px;
+
       line-height: 1.8;
     }
 
     .helpline {
       margin-top: 12px;
+
       color: #bca77f;
     }
-
-    /* MOBILE */
 
     @media (max-width:800px) {
 
@@ -657,8 +737,6 @@
       }
     }
 
-    /* PRINT */
-
     @media print {
 
       body * {
@@ -672,9 +750,12 @@
 
       .ticket-result {
         position: absolute;
+
         left: 0;
         top: 0;
+
         width: 100%;
+
         margin: 0;
       }
 
@@ -686,7 +767,6 @@
         box-shadow: none;
       }
     }
-
   </style>
 </head>
 
@@ -824,7 +904,7 @@
   </section>
 
 
-  <!-- TICKETS -->
+  <!-- TICKET SECTION -->
 
   <section
     class="ticket-section"
@@ -838,7 +918,7 @@
       </h2>
 
       <p class="section-subtitle">
-        SECURE YOUR PLACE AT RANGREZ
+        ONE PERSON • ONE PASS
       </p>
 
       <div class="ticket-box">
@@ -848,7 +928,7 @@
         </div>
 
         <div class="price-label">
-          PER PERSON
+          ONE TICKET PER BOOKING
         </div>
 
         <div class="availability">
@@ -864,6 +944,7 @@
           </span>
 
         </div>
+
 
         <form id="registrationForm">
 
@@ -895,29 +976,11 @@
             required
           >
 
-          <select id="quantity" required>
+          <!-- ONLY ONE TICKET -->
 
-            <option value="1">
-              1 Ticket
-            </option>
-
-            <option value="2">
-              2 Tickets
-            </option>
-
-            <option value="3">
-              3 Tickets
-            </option>
-
-            <option value="4">
-              4 Tickets
-            </option>
-
-            <option value="5">
-              5 Tickets
-            </option>
-
-          </select>
+          <div class="single-ticket">
+            1 Ticket — ₹399
+          </div>
 
           <div class="total">
 
@@ -939,6 +1002,7 @@
           </button>
 
         </form>
+
 
         <div
           id="message"
@@ -973,45 +1037,60 @@
 
           </div>
 
+
           <div class="ticket-body">
 
             <div class="ticket-info">
 
               <div class="ticket-row">
 
-                <span>Name</span>
+                <span>
+                  Name
+                </span>
 
                 <span id="ticketName"></span>
 
               </div>
 
+
               <div class="ticket-row">
 
-                <span>Registration No.</span>
+                <span>
+                  Registration No.
+                </span>
 
                 <span id="ticketRegNo"></span>
 
               </div>
 
+
               <div class="ticket-row">
 
-                <span>Tickets</span>
+                <span>
+                  Tickets
+                </span>
 
                 <span id="ticketQuantity"></span>
 
               </div>
 
+
               <div class="ticket-row">
 
-                <span>Amount Paid</span>
+                <span>
+                  Amount Paid
+                </span>
 
                 <span id="ticketAmount"></span>
 
               </div>
 
+
               <div class="ticket-row">
 
-                <span>Date</span>
+                <span>
+                  Date
+                </span>
 
                 <span>
                   14 October 2026
@@ -1019,9 +1098,12 @@
 
               </div>
 
+
               <div class="ticket-row">
 
-                <span>Time</span>
+                <span>
+                  Time
+                </span>
 
                 <span>
                   5:30 PM onwards
@@ -1029,9 +1111,12 @@
 
               </div>
 
+
               <div class="ticket-row">
 
-                <span>Venue</span>
+                <span>
+                  Venue
+                </span>
 
                 <span>
                   Shree Devi Institution, Kenjar
@@ -1040,6 +1125,7 @@
               </div>
 
             </div>
+
 
             <div class="qr-area">
 
@@ -1051,10 +1137,12 @@
 
             </div>
 
+
             <div
               class="ticket-id"
               id="ticketId"
             ></div>
+
 
             <button
               type="button"
@@ -1092,10 +1180,15 @@
     </p>
 
     <p class="helpline">
+
       Helpline:
+
       +91 99013 89490
+
       &nbsp; | &nbsp;
+
       +91 84315 29176
+
     </p>
 
   </footer>
@@ -1104,56 +1197,85 @@
   <script>
 
     const PRICE = 399;
+
     const CAPACITY = 369;
 
-    const form =
-      document.getElementById("registrationForm");
+    /*
+      Every booking is exactly ONE ticket.
+    */
 
-    const quantity =
-      document.getElementById("quantity");
+    const form =
+      document.getElementById(
+        "registrationForm"
+      );
 
     const totalPrice =
-      document.getElementById("totalPrice");
+      document.getElementById(
+        "totalPrice"
+      );
 
     const paymentButton =
-      document.getElementById("paymentButton");
+      document.getElementById(
+        "paymentButton"
+      );
 
     const message =
-      document.getElementById("message");
+      document.getElementById(
+        "message"
+      );
 
     const ticketsRemaining =
-      document.getElementById("ticketsRemaining");
+      document.getElementById(
+        "ticketsRemaining"
+      );
 
     const ticketsRemainingHero =
-      document.getElementById("ticketsRemainingHero");
+      document.getElementById(
+        "ticketsRemainingHero"
+      );
 
     const ticketResult =
-      document.getElementById("ticketResult");
+      document.getElementById(
+        "ticketResult"
+      );
 
 
-    function showMessage(text, type = "normal") {
+    function showMessage(
+      text,
+      type = "normal"
+    ) {
 
-      message.style.display = "block";
+      message.style.display =
+        "block";
 
-      message.textContent = text;
+      message.textContent =
+        text;
+
 
       if (type === "error") {
 
-        message.style.color = "#ffaaa0";
+        message.style.color =
+          "#ffaaa0";
 
         message.style.borderColor =
           "rgba(255,80,70,.3)";
 
-      } else if (type === "success") {
+      }
 
-        message.style.color = "#d9edb0";
+      else if (type === "success") {
+
+        message.style.color =
+          "#d9edb0";
 
         message.style.borderColor =
           "rgba(150,210,100,.3)";
 
-      } else {
+      }
 
-        message.style.color = "#d8c8a4";
+      else {
+
+        message.style.color =
+          "#d8c8a4";
 
         message.style.borderColor =
           "rgba(220,175,85,.2)";
@@ -1161,72 +1283,72 @@
     }
 
 
-    function updateTotal() {
-
-      const qty =
-        Number(quantity.value);
-
-      totalPrice.textContent =
-        "₹" + (qty * PRICE);
-    }
-
-
-    quantity.addEventListener(
-      "change",
-      updateTotal
-    );
-
-
     async function loadCount() {
 
       try {
 
         const response =
-          await fetch("/api/count");
+          await fetch(
+            "/api/count"
+          );
+
 
         const data =
           await response.json();
+
 
         if (!data.success) {
           return;
         }
 
+
         const remaining =
-          Number(data.remaining);
+          Number(
+            data.remaining
+          );
+
 
         ticketsRemaining.textContent =
           remaining;
 
+
         ticketsRemainingHero.textContent =
           remaining;
 
+
         if (remaining <= 0) {
 
-          paymentButton.disabled = true;
+          paymentButton.disabled =
+            true;
 
           paymentButton.textContent =
             "TICKETS SOLD OUT";
         }
 
-      } catch (error) {
+      }
+
+      catch (error) {
 
         console.error(
           "Count error:",
           error
         );
+
       }
+
     }
 
 
-    /* =========================================
-       RAZORPAY PAYMENT
-    ========================================= */
-
-    async function startPayment(event) {
+    async function startPayment(
+      event
+    ) {
 
       event.preventDefault();
 
-      paymentButton.disabled = true;
+
+      paymentButton.disabled =
+        true;
+
 
       paymentButton.textContent =
         "CREATING PAYMENT...";
@@ -1234,57 +1356,79 @@
 
       const fullName =
         document
-          .getElementById("fullName")
+          .getElementById(
+            "fullName"
+          )
           .value
           .trim();
+
 
       const studentRegNo =
         document
-          .getElementById("studentRegNo")
+          .getElementById(
+            "studentRegNo"
+          )
           .value
           .trim();
+
 
       const mobile =
         document
-          .getElementById("mobile")
+          .getElementById(
+            "mobile"
+          )
           .value
           .trim();
+
 
       const email =
         document
-          .getElementById("email")
+          .getElementById(
+            "email"
+          )
           .value
           .trim();
 
-      const qty =
-        Number(quantity.value);
+
+      /*
+        IMPORTANT:
+        Quantity is permanently 1.
+      */
+
+      const qty = 1;
 
 
       try {
 
-        /* Check availability */
-
         const countResponse =
-          await fetch("/api/count");
+          await fetch(
+            "/api/count"
+          );
+
 
         const countData =
           await countResponse.json();
+
 
         if (!countData.success) {
 
           throw new Error(
             "Unable to check ticket availability."
           );
+
         }
 
 
         if (
-          Number(countData.remaining) < qty
+          Number(
+            countData.remaining
+          ) < 1
         ) {
 
           throw new Error(
-            `Only ${countData.remaining} ticket(s) are available.`
+            "Tickets are sold out."
           );
+
         }
 
 
@@ -1294,12 +1438,11 @@
         );
 
 
-        /* Create Razorpay order */
-
         const orderResponse =
           await fetch(
             "/api/create-order",
             {
+
               method: "POST",
 
               headers: {
@@ -1311,12 +1454,17 @@
                 JSON.stringify({
 
                   fullName,
+
                   studentRegNo,
+
                   mobile,
+
                   email,
-                  quantity: qty
+
+                  quantity: 1
 
                 })
+
             }
           );
 
@@ -1334,6 +1482,7 @@
             orderData.error ||
             "Unable to create payment."
           );
+
         }
 
 
@@ -1345,10 +1494,9 @@
           throw new Error(
             "Razorpay order was not created correctly."
           );
+
         }
 
-
-        /* Razorpay checkout */
 
         const options = {
 
@@ -1370,6 +1518,7 @@
           order_id:
             orderData.orderId,
 
+
           prefill: {
 
             name:
@@ -1383,15 +1532,17 @@
 
           },
 
+
           notes: {
 
             student_reg_no:
               studentRegNo,
 
             quantity:
-              String(qty)
+              "1"
 
           },
+
 
           theme: {
 
@@ -1402,7 +1553,9 @@
 
 
           handler:
-            async function(response) {
+            async function(
+              response
+            ) {
 
               await verifyPayment(
                 response
@@ -1435,23 +1588,30 @@
 
 
         const razorpay =
-          new Razorpay(options);
+          new Razorpay(
+            options
+          );
 
 
         razorpay.on(
           "payment.failed",
-          function(response) {
+          function(
+            response
+          ) {
 
             console.error(
               "Razorpay payment failed:",
               response
             );
 
+
             paymentButton.disabled =
               false;
 
+
             paymentButton.textContent =
               "PROCEED TO PAYMENT";
+
 
             showMessage(
               response.error?.description ||
@@ -1466,12 +1626,15 @@
         razorpay.open();
 
 
-      } catch (error) {
+      }
+
+      catch (error) {
 
         console.error(
           "Payment error:",
           error
         );
+
 
         showMessage(
           error.message ||
@@ -1479,18 +1642,18 @@
           "error"
         );
 
+
         paymentButton.disabled =
           false;
 
+
         paymentButton.textContent =
           "PROCEED TO PAYMENT";
+
       }
+
     }
 
-
-    /* =========================================
-       VERIFY RAZORPAY PAYMENT
-    ========================================= */
 
     async function verifyPayment(
       paymentResponse
@@ -1498,7 +1661,9 @@
 
       try {
 
-        paymentButton.disabled = true;
+        paymentButton.disabled =
+          true;
+
 
         paymentButton.textContent =
           "VERIFYING PAYMENT...";
@@ -1514,13 +1679,16 @@
           new URLSearchParams({
 
             order_id:
-              paymentResponse.razorpay_order_id,
+              paymentResponse
+                .razorpay_order_id,
 
             payment_id:
-              paymentResponse.razorpay_payment_id,
+              paymentResponse
+                .razorpay_payment_id,
 
             signature:
-              paymentResponse.razorpay_signature
+              paymentResponse
+                .razorpay_signature
 
           });
 
@@ -1546,42 +1714,47 @@
             data.error ||
             "Payment was successful but ticket verification failed."
           );
+
         }
 
 
-        showTicket(data);
+        showTicket(
+          data
+        );
 
 
-      } catch (error) {
+      }
+
+      catch (error) {
 
         console.error(
           "Verification error:",
           error
         );
 
-        showMessage(
 
+        showMessage(
           error.message ||
           "Payment verification failed. Please contact the helpline before making another payment.",
-
           "error"
-
         );
+
 
         paymentButton.disabled =
           false;
 
+
         paymentButton.textContent =
           "PROCEED TO PAYMENT";
+
       }
+
     }
 
 
-    /* =========================================
-       SHOW TICKET
-    ========================================= */
-
-    function showTicket(data) {
+    function showTicket(
+      data
+    ) {
 
       const registration =
         data.registration;
@@ -1595,6 +1768,7 @@
         );
 
         return;
+
       }
 
 
@@ -1613,8 +1787,7 @@
       document.getElementById(
         "ticketQuantity"
       ).textContent =
-        registration.quantity +
-        " Ticket(s)";
+        "1 Ticket";
 
 
       document.getElementById(
@@ -1637,7 +1810,8 @@
         );
 
 
-      qrContainer.innerHTML = "";
+      qrContainer.innerHTML =
+        "";
 
 
       if (
@@ -1648,6 +1822,7 @@
         new QRCode(
           qrContainer,
           {
+
             text:
               data.qrToken,
 
@@ -1659,6 +1834,7 @@
 
             correctLevel:
               QRCode.CorrectLevel.H
+
           }
         );
 
@@ -1679,23 +1855,29 @@
       });
 
 
-      paymentButton.disabled = true;
+      paymentButton.disabled =
+        true;
+
 
       paymentButton.textContent =
         "PAYMENT COMPLETED";
 
 
       loadCount();
+
     }
 
 
-    /* =========================================
-       START
-    ========================================= */
+    /*
+      Initial loading
+    */
 
-    updateTotal();
+    totalPrice.textContent =
+      "₹399";
+
 
     loadCount();
+
 
     form.addEventListener(
       "submit",
