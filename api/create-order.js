@@ -21,16 +21,15 @@ module.exports = async function handler(req, res) {
       fullName,
       studentRegNo,
       mobile,
-      email,
-      quantity
+      email
     } = req.body || {};
+
 
     if (
       !fullName ||
       !studentRegNo ||
       !mobile ||
-      !email ||
-      !quantity
+      !email
     ) {
       return res.status(400).json({
         success: false,
@@ -38,18 +37,15 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    const qty = Number(quantity);
 
-    if (
-      !Number.isInteger(qty) ||
-      qty < 1 ||
-      qty > 5
-    ) {
-      return res.status(400).json({
-        success: false,
-        error: "Invalid ticket quantity"
-      });
-    }
+    /*
+      IMPORTANT:
+      Exactly ONE ticket is allowed
+      per booking.
+    */
+
+    const qty = 1;
+
 
     if (
       !SUPABASE_URL ||
@@ -61,6 +57,7 @@ module.exports = async function handler(req, res) {
       });
     }
 
+
     if (
       !RAZORPAY_KEY_ID ||
       !RAZORPAY_KEY_SECRET
@@ -71,40 +68,65 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    /* Check remaining tickets */
 
-    const countResponse = await fetch(
-      `${SUPABASE_URL}/rest/v1/registration?select=quantity&payment_status=eq.paid`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_SECRET_KEY,
-          Authorization: `Bearer ${SUPABASE_SECRET_KEY}`
+    /*
+      Check remaining tickets.
+    */
+
+    const countResponse =
+      await fetch(
+        `${SUPABASE_URL}/rest/v1/registration?select=quantity&payment_status=eq.paid`,
+        {
+          method: "GET",
+
+          headers: {
+            apikey:
+              SUPABASE_SECRET_KEY,
+
+            Authorization:
+              `Bearer ${SUPABASE_SECRET_KEY}`
+          }
         }
-      }
-    );
+      );
+
 
     const countText =
       await countResponse.text();
 
+
     if (!countResponse.ok) {
+
+      console.error(
+        "Supabase count error:",
+        countText
+      );
+
       return res.status(500).json({
         success: false,
-        error: "Unable to check ticket availability"
+        error:
+          "Unable to check ticket availability"
       });
+
     }
+
 
     const paidRegistrations =
       JSON.parse(countText);
 
+
     const sold =
       paidRegistrations.reduce(
         (total, item) =>
-          total + Number(item.quantity || 0),
+          total +
+          Number(
+            item.quantity || 0
+          ),
         0
       );
 
+
     const capacity = 369;
+
 
     const remaining =
       Math.max(
@@ -112,25 +134,32 @@ module.exports = async function handler(req, res) {
         0
       );
 
-    if (remaining < qty) {
+
+    if (remaining < 1) {
+
       return res.status(400).json({
         success: false,
         error:
-          `Only ${remaining} ticket(s) are currently available.`
+          "Tickets are sold out."
       });
+
     }
 
-    /* Ticket amount */
 
-    const amount =
-      qty * 399;
+    /*
+      Fixed price:
+      ONE ticket = ₹399
+    */
 
-    /* Razorpay uses paise */
+    const amount = 399;
 
     const amountInPaise =
       amount * 100;
 
-    /* Create unique order ID */
+
+    /*
+      Create unique Razorpay order ID.
+    */
 
     const orderId =
       "RZ2K26_" +
@@ -141,7 +170,9 @@ module.exports = async function handler(req, res) {
         .substring(2, 8);
 
 
-    /* Razorpay authentication */
+    /*
+      Razorpay authentication.
+    */
 
     const auth =
       Buffer
@@ -151,7 +182,9 @@ module.exports = async function handler(req, res) {
         .toString("base64");
 
 
-    /* Create Razorpay order */
+    /*
+      Create Razorpay order.
+    */
 
     const razorpayResponse =
       await fetch(
@@ -160,14 +193,16 @@ module.exports = async function handler(req, res) {
           method: "POST",
 
           headers: {
-            "Authorization":
+
+            Authorization:
               `Basic ${auth}`,
 
             "Content-Type":
               "application/json",
 
-            "Accept":
+            Accept:
               "application/json"
+
           },
 
           body:
@@ -191,7 +226,7 @@ module.exports = async function handler(req, res) {
                   studentRegNo,
 
                 quantity:
-                  String(qty)
+                  "1"
 
               }
 
@@ -231,7 +266,10 @@ module.exports = async function handler(req, res) {
       );
 
 
-    /* Save registration */
+    /*
+      Save registration in Supabase
+      before payment.
+    */
 
     const supabaseResponse =
       await fetch(
@@ -271,10 +309,10 @@ module.exports = async function handler(req, res) {
                 email,
 
               quantity:
-                qty,
+                1,
 
               amount:
-                amount,
+                399,
 
               payment_status:
                 "pending",
@@ -317,6 +355,11 @@ module.exports = async function handler(req, res) {
       );
 
 
+    /*
+      Send payment information
+      back to the website.
+    */
+
     return res.status(200).json({
 
       success:
@@ -347,9 +390,11 @@ module.exports = async function handler(req, res) {
       error
     );
 
+
     return res.status(500).json({
 
-      success: false,
+      success:
+        false,
 
       error:
         "Server error"
