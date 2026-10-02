@@ -158,7 +158,7 @@ module.exports = async function handler(req, res) {
 
     const registrationResponse =
       await fetch(
-        `${SUPABASE_URL}/rest/v1/registration?cashfree_order_id=eq.${encodeURIComponent(orderId)}&select=*`,
+        `${SUPABASE_URL}/rest/v1/registration?razorpay_order_id=eq.${encodeURIComponent(orderId)}&select=*`,
         {
           method: "GET",
           headers: {
