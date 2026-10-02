@@ -1,1359 +1,1522 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Rangrez - The Garba Night 2K26</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=Cinzel:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: "DM Sans", sans-serif;
-  background: #080504;
-  color: #f5ead2;
-  overflow-x: hidden;
-}
-
-/* HERO */
-
-.hero {
-  min-height: 100vh;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
-
-  background:
-    linear-gradient(
-      rgba(5,2,1,0.48),
-      rgba(5,2,1,0.86)
-    ),
-    url("https://media.indulgexpress.com/indulgexpress%2F2025-09-26%2F0zdll5pw%2FLively_lights.jpg?auto=format%2Ccompress&w=1800");
-
-  background-size: cover;
-  background-position: center;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(180,105,25,0.22),
-      transparent 45%
-    );
-
-  animation: glow 5s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from {
-    opacity: 0.5;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  width: min(950px,92%);
-  padding: 40px 20px;
-}
-
-.college {
-  font-family: "Cinzel", serif;
-  font-size: clamp(14px,2vw,21px);
-  letter-spacing: 5px;
-  font-weight: 700;
-  color: #e9c77b;
-  margin-bottom: 15px;
-}
-
-.presents {
-  font-size: 11px;
-  letter-spacing: 5px;
-  color: #d7c5a0;
-  margin-bottom: 25px;
-}
-
-.rangrez {
-  font-family: "Bodoni Moda", serif;
-  font-size: clamp(65px,13vw,155px);
-  line-height: 0.85;
-  letter-spacing: 8px;
-  color: #f0d18a;
-
-  text-shadow:
-    0 0 25px rgba(240,209,138,0.25),
-    0 5px 40px rgba(0,0,0,0.7);
-}
-
-.garba-night {
-  font-family: "Cinzel", serif;
-  font-size: clamp(18px,4vw,42px);
-  letter-spacing: 8px;
-  margin-top: 20px;
-  color: #f7e6bf;
-}
-
-.year {
-  font-family: "Bodoni Moda", serif;
-  font-size: clamp(45px,8vw,85px);
-  color: #b52b22;
-  letter-spacing: 8px;
-  margin-top: 5px;
-}
-
-.presented {
-  margin-top: 25px;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: #e0d2b6;
-}
-
-.tagline {
-  margin-top: 22px;
-  font-family: "Bodoni Moda", serif;
-  font-style: italic;
-  font-size: clamp(17px,3vw,27px);
-  color: #f0d18a;
-}
-
-.event-info {
-  margin-top: 30px;
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-}
-
-.info-box {
-  padding: 13px 20px;
-
-  border: 1px solid rgba(240,209,138,0.35);
-
-  background: rgba(10,5,3,0.45);
-
-  backdrop-filter: blur(8px);
-
-  font-size: 12px;
-  letter-spacing: 1.5px;
-}
-
-.hero-button {
-  display: inline-block;
-
-  margin-top: 35px;
-
-  padding: 16px 34px;
-
-  text-decoration: none;
-
-  color: #160c04;
-
-  background:
-    linear-gradient(
-      135deg,
-      #f5d78e,
-      #b98532
-    );
-
-  font-family: "Cinzel", serif;
-
-  font-weight: 800;
-
-  letter-spacing: 2px;
-
-  border-radius: 2px;
-
-  transition: 0.3s ease;
-
-  box-shadow:
-    0 10px 35px rgba(0,0,0,0.35);
-}
-
-.hero-button:hover {
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 15px 45px rgba(240,209,138,0.25);
-}
-
-.hero-counter {
-  margin-top: 22px;
-
-  font-size: 12px;
-
-  letter-spacing: 2px;
-
-  color: #dbc99f;
-}
-
-/* SECTIONS */
-
-section {
-  padding: 90px 20px;
-}
-
-.section-inner {
-  max-width: 1050px;
-  margin: auto;
-}
-
-.section-title {
-  text-align: center;
-
-  font-family: "Cinzel", serif;
-
-  font-size: clamp(25px,5vw,42px);
-
-  letter-spacing: 4px;
-
-  color: #e9c77b;
-
-  margin-bottom: 50px;
-}
-
-/* DETAILS */
-
-.details {
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(132,25,15,0.18),
-      transparent 45%
-    ),
-    #090605;
-}
-
-.detail-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap: 18px;
-}
-
-.detail-card {
-  border:
-    1px solid
-    rgba(240,209,138,0.18);
-
-  background:
-    rgba(255,255,255,0.025);
-
-  padding: 32px 20px;
-
-  text-align: center;
-
-  transition: 0.3s ease;
-}
-
-.detail-card:hover {
-  transform: translateY(-5px);
-
-  border-color:
-    rgba(240,209,138,0.45);
-}
-
-.detail-label {
-  font-size: 10px;
-
-  letter-spacing: 3px;
-
-  color: #a99b80;
-
-  margin-bottom: 12px;
-}
-
-.detail-value {
-  font-family: "Cinzel", serif;
-
-  color: #f0d18a;
-
-  font-size: 17px;
-
-  line-height: 1.5;
-}
-
-/* TICKETS */
-
-.tickets {
-  background:
-    linear-gradient(
-      rgba(20,5,3,0.85),
-      rgba(8,4,2,0.95)
-    );
-}
-
-.ticket-card {
-  max-width: 620px;
-
-  margin: auto;
-
-  padding: 45px 30px;
-
-  border:
-    1px solid
-    rgba(240,209,138,0.3);
-
-  background:
-    rgba(255,255,255,0.035);
-
-  box-shadow:
-    0 20px 80px rgba(0,0,0,0.45);
-}
-
-.ticket-price {
-  text-align: center;
-
-  font-family: "Bodoni Moda", serif;
-
-  font-size: 55px;
-
-  color: #f0d18a;
-
-  margin-bottom: 10px;
-}
-
-.availability {
-  text-align: center;
-
-  font-size: 12px;
-
-  letter-spacing: 2px;
-
-  color: #c7b895;
-
-  margin-bottom: 35px;
-}
-
-.availability strong {
-  color: #f0d18a;
-
-  font-size: 18px;
-}
-
-form {
-  display: grid;
-
-  gap: 17px;
-}
-
-label {
-  font-size: 11px;
-
-  letter-spacing: 1.5px;
-
-  color: #c8b99b;
-}
-
-input,
-select {
-  width: 100%;
-
-  margin-top: 7px;
-
-  padding: 14px 15px;
-
-  background:
-    rgba(0,0,0,0.4);
-
-  border:
-    1px solid
-    rgba(240,209,138,0.2);
-
-  color: #f7ead0;
-
-  outline: none;
-
-  font-family:
-    "DM Sans",sans-serif;
-}
-
-input:focus,
-select:focus {
-  border-color: #d8b665;
-}
-
-select option {
-  background: #17100b;
-  color: white;
-}
-
-.total-box {
-  margin-top: 5px;
-
-  padding: 17px;
-
-  text-align: center;
-
-  border:
-    1px solid
-    rgba(240,209,138,0.2);
-
-  background:
-    rgba(240,209,138,0.04);
-}
-
-.total-label {
-  font-size: 10px;
-
-  letter-spacing: 3px;
-
-  color: #a99b80;
-}
-
-.total-price {
-  display: block;
-
-  margin-top: 5px;
-
-  font-family: "Bodoni Moda",serif;
-
-  font-size: 32px;
-
-  color: #f0d18a;
-}
-
-.payment-button {
-  margin-top: 10px;
-
-  width: 100%;
-
-  padding: 17px;
-
-  border: none;
-
-  cursor: pointer;
-
-  background:
-    linear-gradient(
-      135deg,
-      #f4d58b,
-      #b98532
-    );
-
-  color: #160b03;
-
-  font-family: "Cinzel",serif;
-
-  font-weight: 800;
-
-  letter-spacing: 2px;
-
-  transition: 0.3s ease;
-}
-
-.payment-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 12px 35px
-    rgba(240,209,138,0.2);
-}
-
-.payment-button:disabled {
-  opacity: 0.55;
-
-  cursor: not-allowed;
-}
-
-.small-note {
-  text-align: center;
-
-  font-size: 10px;
-
-  color: #887d6c;
-
-  line-height: 1.6;
-
-  margin-top: 15px;
-}
-
-/* FOOTER */
-
-footer {
-  padding: 45px 20px;
-
-  text-align: center;
-
-  background: #050302;
-
-  border-top:
-    1px solid
-    rgba(240,209,138,0.12);
-}
-
-.footer-title {
-  font-family: "Cinzel",serif;
-
-  color: #e9c77b;
-
-  letter-spacing: 3px;
-
-  font-size: 18px;
-}
-
-.footer-text {
-  margin-top: 12px;
-
-  color: #9b907d;
-
-  font-size: 12px;
-
-  line-height: 1.8;
-}
-
-.helpline {
-  margin-top: 15px;
-
-  color: #d9c59c;
-
-  font-size: 13px;
-}
-
-/* MOBILE */
-
-@media (max-width:750px) {
-
-  .hero {
-    min-height: 95vh;
-  }
-
-  .hero-content {
-    padding: 35px 12px;
-  }
-
-  .college {
-    letter-spacing: 3px;
-  }
-
-  .rangrez {
-    letter-spacing: 3px;
-  }
-
-  .garba-night {
-    letter-spacing: 4px;
-  }
-
-  .year {
-    letter-spacing: 4px;
-  }
-
-  .detail-grid {
-    grid-template-columns: 1fr;
-  }
-
-  section {
-    padding: 70px 15px;
-  }
-
-  .ticket-card {
-    padding: 35px 20px;
-  }
-
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Rangrez – The Garba Night 2K26</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=Cinzel:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(173, 111, 22, 0.12), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(117, 18, 18, 0.14), transparent 35%),
+        #070505;
+      color: #f5e5bd;
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          120deg,
+          transparent 0%,
+          rgba(255, 215, 140, 0.025) 50%,
+          transparent 100%
+        );
+      z-index: 20;
+    }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          rgba(4, 2, 2, 0.42),
+          rgba(4, 2, 2, 0.82)
+        ),
+        url("https://media.indulgexpress.com/indulgeexpress%2F2025-09-26%2F0zdll5pw%2FLively_lights.jpg?auto=format%2Ccompress&w=1800")
+        center / cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, transparent 20%, rgba(0,0,0,.55) 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      animation: heroIn 1.5s ease forwards;
+    }
+
+    @keyframes heroIn {
+      from {
+        opacity: 0;
+        transform: translateY(35px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .college {
+      font-family: "Cinzel", serif;
+      font-size: clamp(14px, 2vw, 20px);
+      letter-spacing: 7px;
+      font-weight: 700;
+      color: #e8c982;
+      margin-bottom: 15px;
+    }
+
+    .presents {
+      font-size: 11px;
+      letter-spacing: 6px;
+      color: #d9c8a1;
+      margin-bottom: 35px;
+    }
+
+    .rangrez {
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(65px, 13vw, 155px);
+      line-height: .8;
+      letter-spacing: 4px;
+      font-weight: 600;
+      color: #f3d58c;
+      text-shadow:
+        0 0 25px rgba(241, 190, 86, .25),
+        0 5px 35px rgba(0,0,0,.7);
+    }
+
+    .garba {
+      font-family: "Cinzel", serif;
+      font-size: clamp(25px, 5vw, 58px);
+      letter-spacing: clamp(5px, 1.4vw, 14px);
+      margin-top: 22px;
+      color: #fff1ce;
+      font-weight: 600;
+    }
+
+    .year {
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(30px, 6vw, 60px);
+      letter-spacing: 12px;
+      margin-top: 12px;
+      color: #b98a3c;
+    }
+
+    .presented {
+      margin-top: 32px;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: #e7d5ae;
+    }
+
+    .tagline {
+      margin-top: 15px;
+      font-family: "Bodoni Moda", serif;
+      font-size: 20px;
+      font-style: italic;
+      color: #f2d58f;
+    }
+
+    .event-meta {
+      margin: 30px auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .meta-item {
+      padding: 11px 18px;
+      border: 1px solid rgba(220, 174, 83, .35);
+      background: rgba(0,0,0,.25);
+      backdrop-filter: blur(8px);
+      border-radius: 30px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: #f0dfba;
+    }
+
+    .cta {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 16px 34px;
+      border: 1px solid #c99b4c;
+      color: #f5d68f;
+      text-decoration: none;
+      font-family: "Cinzel", serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      transition: .35s ease;
+      background: rgba(0,0,0,.3);
+    }
+
+    .cta:hover {
+      background: #c99b4c;
+      color: #090605;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(201,155,76,.2);
+    }
+
+    .counter {
+      margin-top: 25px;
+      font-size: 13px;
+      color: #d7c49b;
+    }
+
+    .counter strong {
+      color: #f0ca78;
+      font-size: 18px;
+    }
+
+    section {
+      padding: 90px 20px;
+      position: relative;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: "Cinzel", serif;
+      font-size: clamp(25px, 5vw, 44px);
+      letter-spacing: 5px;
+      color: #efd18b;
+      margin-bottom: 15px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #9f9078;
+      font-size: 13px;
+      margin-bottom: 50px;
+      letter-spacing: 2px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .detail-card {
+      padding: 30px 18px;
+      border: 1px solid rgba(211,164,72,.18);
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.035),
+        rgba(255,255,255,.01)
+      );
+      text-align: center;
+      border-radius: 4px;
+    }
+
+    .detail-card h3 {
+      font-family: "Cinzel", serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #b48a45;
+      margin-bottom: 12px;
+    }
+
+    .detail-card p {
+      font-size: 14px;
+      color: #eadbbd;
+      line-height: 1.6;
+    }
+
+    .ticket-section {
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(112, 25, 19, .13),
+          transparent 60%
+        );
+    }
+
+    .ticket-box {
+      max-width: 620px;
+      margin: auto;
+      border: 1px solid rgba(216,169,77,.35);
+      padding: 38px 28px;
+      background: rgba(8,5,4,.75);
+      box-shadow: 0 25px 80px rgba(0,0,0,.45);
+    }
+
+    .price {
+      text-align: center;
+      font-family: "Bodoni Moda", serif;
+      font-size: 58px;
+      color: #f1ce82;
+      margin-bottom: 6px;
+    }
+
+    .price-label {
+      text-align: center;
+      color: #96866c;
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-bottom: 35px;
+    }
+
+    .availability {
+      text-align: center;
+      margin-bottom: 28px;
+      padding: 13px;
+      border: 1px solid rgba(211,164,72,.18);
+      background: rgba(255,255,255,.02);
+      font-size: 13px;
+      color: #cdbb96;
+    }
+
+    .availability strong {
+      color: #efd087;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 15px;
+      background: #0e0a08;
+      border: 1px solid rgba(220,175,85,.2);
+      color: #f4e6c5;
+      outline: none;
+      font-family: "DM Sans", sans-serif;
+      border-radius: 2px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #c99b4c;
+    }
+
+    input::placeholder {
+      color: #746a59;
+    }
+
+    .total {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-top: 1px solid rgba(220,175,85,.15);
+      border-bottom: 1px solid rgba(220,175,85,.15);
+      margin-top: 4px;
+      color: #cbb996;
+    }
+
+    .total strong {
+      color: #f2d18a;
+      font-size: 18px;
+    }
+
+    button {
+      padding: 17px;
+      border: 1px solid #c99b4c;
+      background: linear-gradient(135deg, #c99b4c, #9b6929);
+      color: #100b06;
+      font-family: "Cinzel", serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(201,155,76,.2);
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      display: none;
+      padding: 14px;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 13px;
+      line-height: 1.5;
+      border: 1px solid rgba(220,175,85,.2);
+    }
+
+    .ticket-result {
+      display: none;
+      max-width: 620px;
+      margin: 45px auto 0;
+      animation: ticketIn .8s ease;
+    }
+
+    @keyframes ticketIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ticket-card {
+      background: #f3ead5;
+      color: #18120d;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0,0,0,.55);
+    }
+
+    .ticket-top {
+      padding: 28px 25px;
+      text-align: center;
+      background:
+        linear-gradient(135deg, #17100b, #3b1a12);
+      color: #f2d28c;
+      border-bottom: 2px solid #bd8d3e;
+    }
+
+    .ticket-top small {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 4px;
+      margin-bottom: 10px;
+      color: #d7c49d;
+    }
+
+    .ticket-top h2 {
+      font-family: "Cinzel", serif;
+      font-size: 21px;
+      letter-spacing: 2px;
+    }
+
+    .ticket-top p {
+      margin-top: 8px;
+      font-family: "Bodoni Moda", serif;
+      font-size: 15px;
+      color: #e9c77f;
+    }
+
+    .ticket-body {
+      padding: 30px 25px;
+    }
+
+    .ticket-info {
+      display: grid;
+      gap: 14px;
+    }
+
+    .ticket-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      border-bottom: 1px dashed rgba(40,25,15,.2);
+      padding-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .ticket-row span:first-child {
+      color: #766552;
+    }
+
+    .ticket-row span:last-child {
+      font-weight: 700;
+      text-align: right;
+      color: #20160f;
+    }
+
+    .qr-area {
+      text-align: center;
+      padding: 25px 0 10px;
+    }
+
+    #qrcode {
+      display: inline-block;
+      padding: 10px;
+      background: white;
+    }
+
+    .qr-note {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #766552;
+    }
+
+    .ticket-id {
+      text-align: center;
+      margin-top: 18px;
+      padding: 13px;
+      background: #e7dcc2;
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .print-ticket {
+      width: 100%;
+      margin-top: 18px;
+      background: #17100b;
+      color: #f2d28c;
+      border-color: #17100b;
+    }
+
+    footer {
+      padding: 50px 20px;
+      text-align: center;
+      border-top: 1px solid rgba(220,175,85,.12);
+    }
+
+    footer h3 {
+      font-family: "Cinzel", serif;
+      color: #dcb66d;
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+    }
+
+    footer p {
+      color: #756a58;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .helpline {
+      margin-top: 12px;
+      color: #bca77f;
+    }
+
+    @media (max-width: 800px) {
+      .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .college {
+        letter-spacing: 4px;
+      }
+
+      .presents {
+        letter-spacing: 4px;
+      }
+
+      .rangrez {
+        font-size: 67px;
+      }
+
+      .garba {
+        font-size: 25px;
+        letter-spacing: 5px;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ticket-box {
+        padding: 30px 18px;
+      }
+
+      .event-meta {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .meta-item {
+        width: fit-content;
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      .ticket-result,
+      .ticket-result * {
+        visibility: visible;
+      }
+
+      .ticket-result {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+      }
+
+      .print-ticket {
+        display: none;
+      }
+
+      .ticket-card {
+        box-shadow: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
+  <!-- HERO -->
 
-<!-- HERO -->
+  <header class="hero">
 
-<header class="hero">
+    <div class="hero-content">
 
-<div class="hero-content">
+      <div class="college">
+        SHREE DEVI COLLEGE
+      </div>
 
-<div class="college">
-SHREE DEVI COLLEGE
-</div>
+      <div class="presents">
+        PRESENTS
+      </div>
 
-<div class="presents">
-PRESENTS
-</div>
+      <div class="rangrez">
+        RANGREZ
+      </div>
 
-<div class="rangrez">
-RANGREZ
-</div>
+      <div class="garba">
+        THE GARBA NIGHT
+      </div>
 
-<div class="garba-night">
-THE GARBA NIGHT
-</div>
+      <div class="year">
+        2K26
+      </div>
 
-<div class="year">
-2K26
-</div>
+      <div class="presented">
+        PRESENTED BY STUDENT COUNCIL MEMBERS
+      </div>
 
-<div class="presented">
-PRESENTED BY STUDENT COUNCIL MEMBERS
-</div>
+      <div class="tagline">
+        Feel the Beat • Live the Colours
+      </div>
 
-<div class="tagline">
-Feel the Beat • Live the Colours
-</div>
+      <div class="event-meta">
 
-<div class="event-info">
+        <div class="meta-item">
+          14 OCTOBER 2026
+        </div>
 
-<div class="info-box">
-14 OCTOBER 2026
-</div>
+        <div class="meta-item">
+          5:30 PM ONWARDS
+        </div>
 
-<div class="info-box">
-5:30 PM ONWARDS
-</div>
+        <div class="meta-item">
+          SHREE DEVI INSTITUTION, KENJAR
+        </div>
 
-<div class="info-box">
-SHREE DEVI INSTITUTION, KENJAR
-</div>
+      </div>
 
-</div>
+      <a href="#tickets" class="cta">
+        RESERVE YOUR PASS
+      </a>
 
-<a
-href="#tickets"
-class="hero-button"
->
-RESERVE YOUR PASS
-</a>
+      <div class="counter">
+        <strong id="ticketsRemainingHero">369</strong>
+        / 369 TICKETS AVAILABLE
+      </div>
 
-<div class="hero-counter">
+    </div>
 
-<span id="counterStatusHero">
-LIVE AVAILABILITY
-</span>
+  </header>
 
-·
 
-<strong id="ticketsRemainingHero">
-369
-</strong>
+  <!-- DETAILS -->
 
-PASSES REMAINING
+  <section>
 
-</div>
+    <div class="section-inner">
 
-</div>
+      <h2 class="section-title">
+        THE EXPERIENCE
+      </h2>
 
-</header>
+      <p class="section-subtitle">
+        ONE NIGHT • ONE RHYTHM • A THOUSAND COLOURS
+      </p>
 
+      <div class="details-grid">
 
-<!-- DETAILS -->
+        <div class="detail-card">
+          <h3>DATE</h3>
+          <p>14 October 2026</p>
+        </div>
 
-<section class="details">
+        <div class="detail-card">
+          <h3>TIME</h3>
+          <p>5:30 PM onwards</p>
+        </div>
 
-<div class="section-inner">
+        <div class="detail-card">
+          <h3>VENUE</h3>
+          <p>Shree Devi Institution, Kenjar</p>
+        </div>
 
-<h2 class="section-title">
-THE EXPERIENCE
-</h2>
+        <div class="detail-card">
+          <h3>THEME</h3>
+          <p>Traditional Dhandiya Night</p>
+        </div>
 
-<div class="detail-grid">
+      </div>
 
-<div class="detail-card">
+    </div>
 
-<div class="detail-label">
-DATE
-</div>
+  </section>
 
-<div class="detail-value">
-14 OCTOBER<br>
-2026
-</div>
 
-</div>
+  <!-- TICKETS -->
 
+  <section class="ticket-section" id="tickets">
 
-<div class="detail-card">
+    <div class="section-inner">
 
-<div class="detail-label">
-TIME
-</div>
+      <h2 class="section-title">
+        RESERVE YOUR PASS
+      </h2>
 
-<div class="detail-value">
-5:30 PM<br>
-ONWARDS
-</div>
+      <p class="section-subtitle">
+        SECURE YOUR PLACE AT RANGREZ
+      </p>
 
-</div>
 
+      <div class="ticket-box">
 
-<div class="detail-card">
+        <div class="price">
+          ₹399
+        </div>
 
-<div class="detail-label">
-VENUE
-</div>
+        <div class="price-label">
+          PER PERSON
+        </div>
 
-<div class="detail-value">
-SHREE DEVI<br>
-INSTITUTION, KENJAR
-</div>
 
-</div>
+        <div class="availability">
 
+          <span>
+            <strong id="ticketsRemaining">369</strong>
+            tickets remaining
+          </span>
 
-<div class="detail-card">
+        </div>
 
-<div class="detail-label">
-EVENT
-</div>
 
-<div class="detail-value">
-DHANDIYA<br>
-NIGHT
-</div>
+        <form id="registrationForm">
 
-</div>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="Full Name"
+            required
+          >
 
+          <input
+            type="text"
+            id="studentRegNo"
+            name="studentRegNo"
+            placeholder="Student Registration Number"
+            required
+          >
 
-<div class="detail-card">
+          <input
+            type="tel"
+            id="mobile"
+            name="mobile"
+            placeholder="Mobile Number"
+            required
+          >
 
-<div class="detail-label">
-EXPERIENCE
-</div>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email Address"
+            required
+          >
 
-<div class="detail-value">
-TRADITIONAL<br>
-GARBA
-</div>
+          <select
+            id="quantity"
+            name="quantity"
+            required
+          >
+            <option value="1">1 Ticket</option>
+            <option value="2">2 Tickets</option>
+            <option value="3">3 Tickets</option>
+            <option value="4">4 Tickets</option>
+            <option value="5">5 Tickets</option>
+          </select>
 
-</div>
 
+          <div class="total">
 
-<div class="detail-card">
+            <span>
+              TOTAL
+            </span>
 
-<div class="detail-label">
-ORGANIZED BY
-</div>
+            <strong id="totalPrice">
+              ₹399
+            </strong>
 
-<div class="detail-value">
-STUDENT<br>
-COUNCIL MEMBERS
-</div>
+          </div>
 
-</div>
 
-</div>
+          <button
+            type="submit"
+            id="paymentButton"
+          >
+            PROCEED TO PAYMENT
+          </button>
 
-</div>
+        </form>
 
-</section>
 
+        <div
+          id="message"
+          class="message"
+        ></div>
 
-<!-- TICKETS -->
+      </div>
 
-<section
-class="tickets"
-id="tickets"
->
 
-<div class="section-inner">
+      <!-- TICKET RESULT -->
 
-<h2 class="section-title">
-RESERVE YOUR PASS
-</h2>
+      <div
+        id="ticketResult"
+        class="ticket-result"
+      >
 
-<div class="ticket-card">
+        <div class="ticket-card">
 
-<div class="ticket-price">
-₹399
-</div>
+          <div class="ticket-top">
 
-<div class="availability">
+            <small>
+              OFFICIAL ENTRY PASS
+            </small>
 
-<span id="counterStatus">
-LIVE AVAILABILITY
-</span>
+            <h2>
+              RANGREZ – THE GARBA NIGHT 2K26
+            </h2>
 
-<br>
+            <p>
+              Feel the Beat • Live the Colours
+            </p>
 
-<strong id="ticketsRemaining">
-369
-</strong>
+          </div>
 
-/
 
-369 PASSES REMAINING
+          <div class="ticket-body">
 
-</div>
+            <div class="ticket-info">
 
+              <div class="ticket-row">
+                <span>Name</span>
+                <span id="ticketName"></span>
+              </div>
 
-<form id="registrationForm">
+              <div class="ticket-row">
+                <span>Registration No.</span>
+                <span id="ticketRegNo"></span>
+              </div>
 
+              <div class="ticket-row">
+                <span>Tickets</span>
+                <span id="ticketQuantity"></span>
+              </div>
 
-<label>
+              <div class="ticket-row">
+                <span>Amount Paid</span>
+                <span id="ticketAmount"></span>
+              </div>
 
-FULL NAME
+              <div class="ticket-row">
+                <span>Date</span>
+                <span>14 October 2026</span>
+              </div>
 
-<input
-type="text"
-id="fullName"
-name="fullName"
-placeholder="Enter your full name"
-required
->
+              <div class="ticket-row">
+                <span>Time</span>
+                <span>5:30 PM onwards</span>
+              </div>
 
-</label>
+              <div class="ticket-row">
+                <span>Venue</span>
+                <span>Shree Devi Institution, Kenjar</span>
+              </div>
 
+            </div>
 
-<label>
 
-STUDENT REGISTRATION NUMBER
+            <div class="qr-area">
 
-<input
-type="text"
-id="studentRegNo"
-name="studentRegNo"
-placeholder="Enter registration number"
-required
->
+              <div id="qrcode"></div>
 
-</label>
+              <div class="qr-note">
+                Show this QR code at the entrance.
+              </div>
 
+            </div>
 
-<label>
 
-MOBILE NUMBER
+            <div
+              class="ticket-id"
+              id="ticketId"
+            ></div>
 
-<input
-type="tel"
-id="mobile"
-name="mobile"
-placeholder="Enter mobile number"
-inputmode="numeric"
-required
->
 
-</label>
+            <button
+              type="button"
+              class="print-ticket"
+              onclick="window.print()"
+            >
+              PRINT / SAVE TICKET
+            </button>
 
+          </div>
 
-<label>
+        </div>
 
-EMAIL ADDRESS
+      </div>
 
-<input
-type="email"
-id="email"
-name="email"
-placeholder="Enter email address"
-required
->
+    </div>
 
-</label>
+  </section>
 
 
-<label>
+  <!-- FOOTER -->
 
-NUMBER OF TICKETS
+  <footer>
 
-<select
-id="quantity"
-name="quantity"
-required
->
+    <h3>
+      RANGREZ 2K26
+    </h3>
 
-<option value="1">
-1 Ticket
-</option>
+    <p>
+      SHREE DEVI COLLEGE
+    </p>
 
-<option value="2">
-2 Tickets
-</option>
+    <p>
+      PRESENTED BY STUDENT COUNCIL MEMBERS
+    </p>
 
-<option value="3">
-3 Tickets
-</option>
+    <p class="helpline">
+      Helpline: +91 99013 89490 &nbsp; | &nbsp; +91 84315 29176
+    </p>
 
-<option value="4">
-4 Tickets
-</option>
+  </footer>
 
-<option value="5">
-5 Tickets
-</option>
 
-</select>
+  <script>
 
-</label>
+    const PRICE = 399;
+    const CAPACITY = 369;
 
+    const form =
+      document.getElementById("registrationForm");
 
-<div class="total-box">
+    const quantity =
+      document.getElementById("quantity");
 
-<span class="total-label">
-TOTAL AMOUNT
-</span>
+    const totalPrice =
+      document.getElementById("totalPrice");
 
-<span
-class="total-price"
-id="totalPrice"
->
-₹399
-</span>
+    const paymentButton =
+      document.getElementById("paymentButton");
 
-</div>
+    const message =
+      document.getElementById("message");
 
+    const ticketsRemaining =
+      document.getElementById("ticketsRemaining");
 
-<button
-type="submit"
-class="payment-button"
-id="paymentButton"
->
-CONTINUE TO PAYMENT
-</button>
+    const ticketsRemainingHero =
+      document.getElementById("ticketsRemainingHero");
 
+    const ticketResult =
+      document.getElementById("ticketResult");
 
-<div class="small-note">
 
-Secure online payment powered by Cashfree.
-Your ticket will be generated after successful
-payment verification.
+    function showMessage(text, type = "normal") {
 
-</div>
+      message.style.display = "block";
+      message.textContent = text;
 
-</form>
+      if (type === "error") {
+        message.style.color = "#ffaaa0";
+        message.style.borderColor = "rgba(255,80,70,.3)";
+      }
 
-</div>
+      else if (type === "success") {
+        message.style.color = "#d9edb0";
+        message.style.borderColor = "rgba(150,210,100,.3)";
+      }
 
-</div>
+      else {
+        message.style.color = "#d8c8a4";
+        message.style.borderColor = "rgba(220,175,85,.2)";
+      }
+    }
 
-</section>
 
+    function updateTotal() {
 
-<!-- FOOTER -->
+      const qty =
+        Number(quantity.value);
 
-<footer>
+      totalPrice.textContent =
+        "₹" + (qty * PRICE);
 
-<div class="footer-title">
-RANGREZ • THE GARBA NIGHT 2K26
-</div>
+    }
 
-<div class="footer-text">
-SHREE DEVI COLLEGE<br>
-SHREE DEVI INSTITUTION, KENJAR
-</div>
 
-<div class="helpline">
+    quantity.addEventListener(
+      "change",
+      updateTotal
+    );
 
-HELPLINE<br>
 
-+91 99013 89490
-&nbsp; | &nbsp;
-+91 84315 29176
+    async function loadCount() {
 
-</div>
+      try {
 
-</footer>
+        const response =
+          await fetch("/api/count");
 
+        const data =
+          await response.json();
 
-<!-- CASHFREE -->
+        if (!data.success) {
+          return;
+        }
 
-<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+        const remaining =
+          Number(data.remaining);
 
+        ticketsRemaining.textContent =
+          remaining;
 
-<script>
+        ticketsRemainingHero.textContent =
+          remaining;
 
-/* ELEMENTS */
+        if (remaining <= 0) {
 
-const registrationForm =
-document.getElementById("registrationForm");
+          paymentButton.disabled = true;
 
-const quantity =
-document.getElementById("quantity");
+          paymentButton.textContent =
+            "TICKETS SOLD OUT";
 
-const totalPrice =
-document.getElementById("totalPrice");
+        }
 
-const paymentButton =
-document.getElementById("paymentButton");
+      }
 
-const ticketsRemaining =
-document.getElementById("ticketsRemaining");
+      catch (error) {
 
-const ticketsRemainingHero =
-document.getElementById("ticketsRemainingHero");
+        console.error(
+          "Count error:",
+          error
+        );
 
-const counterStatus =
-document.getElementById("counterStatus");
+      }
 
-const counterStatusHero =
-document.getElementById("counterStatusHero");
+    }
 
 
-const pricePerTicket = 399;
+    async function startPayment(event) {
 
+      event.preventDefault();
 
-/* CASHFREE */
 
-const cashfree = Cashfree({
-mode: "sandbox"
-});
+      paymentButton.disabled = true;
 
+      paymentButton.textContent =
+        "CREATING PAYMENT...";
 
-/* TOTAL PRICE */
 
-function updateTotal() {
+      const fullName =
+        document.getElementById("fullName").value.trim();
 
-const qty =
-Number(quantity.value);
+      const studentRegNo =
+        document.getElementById("studentRegNo").value.trim();
 
-totalPrice.textContent =
-"₹" + (qty * pricePerTicket);
+      const mobile =
+        document.getElementById("mobile").value.trim();
 
-}
+      const email =
+        document.getElementById("email").value.trim();
 
+      const qty =
+        Number(quantity.value);
 
-quantity.addEventListener(
-"change",
-updateTotal
-);
 
+      try {
 
-/* LOAD TICKET COUNT */
+        const countResponse =
+          await fetch("/api/count");
 
-async function loadTicketCount() {
+        const countData =
+          await countResponse.json();
 
-try {
+        if (!countData.success) {
 
-const response =
-await fetch(
-"/api/count",
-{
-cache: "no-store"
-}
-);
+          throw new Error(
+            "Unable to check ticket availability."
+          );
 
-const data =
-await response.json();
+        }
 
-if (
-!response.ok ||
-!data.success
-) {
 
-throw new Error(
-data.error ||
-"Unable to load ticket count"
-);
+        if (
+          Number(countData.remaining) < qty
+        ) {
 
-}
+          throw new Error(
+            `Only ${countData.remaining} ticket(s) are available.`
+          );
 
-const remaining =
-Math.max(
-0,
-Number(data.remaining)
-);
+        }
 
-ticketsRemaining.textContent =
-remaining;
 
-ticketsRemainingHero.textContent =
-remaining;
+        showMessage(
+          "Creating your secure payment...",
+          "normal"
+        );
 
 
-if (remaining <= 0) {
+        const orderResponse =
+          await fetch(
+            "/api/create-order",
+            {
+              method: "POST",
 
-counterStatus.textContent =
-"SOLD OUT";
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
 
-counterStatusHero.textContent =
-"SOLD OUT";
+              body:
+                JSON.stringify({
+                  fullName,
+                  studentRegNo,
+                  mobile,
+                  email,
+                  quantity: qty
+                })
+            }
+          );
 
-paymentButton.disabled =
-true;
 
-paymentButton.textContent =
-"SOLD OUT";
+        const orderData =
+          await orderResponse.json();
 
-}
 
-else {
+        if (!orderResponse.ok ||
+            !orderData.success) {
 
-counterStatus.textContent =
-"LIVE AVAILABILITY";
+          throw new Error(
+            orderData.error ||
+            "Unable to create payment."
+          );
 
-counterStatusHero.textContent =
-"LIVE AVAILABILITY";
+        }
 
-paymentButton.disabled =
-false;
 
-paymentButton.textContent =
-"CONTINUE TO PAYMENT";
+        if (
+          !orderData.paymentSessionId
+        ) {
 
-}
+          throw new Error(
+            "Payment session was not created."
+          );
 
-}
+        }
 
-catch (error) {
 
-console.error(
-"Ticket count error:",
-error
-);
+        const cashfree =
+          Cashfree({
+            mode: "sandbox"
+          });
 
-}
 
-}
+        showMessage(
+          "Opening secure payment...",
+          "normal"
+        );
 
 
-loadTicketCount();
+        await cashfree.checkout({
 
+          paymentSessionId:
+            orderData.paymentSessionId,
 
-setInterval(
-loadTicketCount,
-30000
-);
+          redirectTarget:
+            "_self"
 
+        });
 
-/* PAYMENT */
+      }
 
-registrationForm.addEventListener(
-"submit",
-async function(event) {
+      catch (error) {
 
-event.preventDefault();
+        console.error(
+          "Payment error:",
+          error
+        );
 
-paymentButton.disabled =
-true;
+        showMessage(
+          error.message ||
+          "Something went wrong. Please try again.",
+          "error"
+        );
 
-paymentButton.textContent =
-"CHECKING AVAILABILITY...";
+        paymentButton.disabled = false;
 
+        paymentButton.textContent =
+          "PROCEED TO PAYMENT";
 
-try {
+      }
 
-/* CHECK COUNT */
+    }
 
-const countResponse =
-await fetch(
-"/api/count",
-{
-cache: "no-store"
-}
-);
 
-const countData =
-await countResponse.json();
+    form.addEventListener(
+      "submit",
+      startPayment
+    );
 
-if (
-!countResponse.ok ||
-!countData.success
-) {
 
-throw new Error(
-countData.error ||
-"Unable to check ticket availability."
-);
+    async function verifyReturnedPayment() {
 
-}
+      const params =
+        new URLSearchParams(
+          window.location.search
+        );
 
 
-const selectedQuantity =
-Number(quantity.value);
+      const payment =
+        params.get("payment");
 
+      const orderId =
+        params.get("order_id");
 
-if (
-selectedQuantity >
-Number(countData.remaining)
-) {
 
-throw new Error(
-"Only " +
-countData.remaining +
-" ticket(s) are currently available."
-);
+      if (
+        payment !== "success" ||
+        !orderId
+      ) {
 
-}
+        return;
 
+      }
 
-if (
-Number(countData.remaining) <= 0
-) {
 
-throw new Error(
-"Sorry, all tickets are sold out."
-);
+      window.scrollTo({
+        top: document.getElementById("tickets").offsetTop,
+        behavior: "smooth"
+      });
 
-}
 
+      showMessage(
+        "Payment completed. Confirming your ticket...",
+        "normal"
+      );
 
-/* FORM DATA */
 
-const formData =
-new FormData(
-registrationForm
-);
+      paymentButton.disabled = true;
 
+      paymentButton.textContent =
+        "VERIFYING PAYMENT...";
 
-const customerData = {
 
-fullName:
-formData.get("fullName"),
+      let attempts = 0;
 
-studentRegNo:
-formData.get("studentRegNo"),
+      const maxAttempts = 10;
 
-mobile:
-formData.get("mobile"),
 
-email:
-formData.get("email"),
+      async function checkStatus() {
 
-quantity:
-selectedQuantity
+        attempts++;
 
-};
 
+        try {
 
-/* CREATE ORDER */
+          const response =
+            await fetch(
+              "/api/payment-status?order_id=" +
+              encodeURIComponent(orderId)
+            );
 
-paymentButton.textContent =
-"CREATING PAYMENT...";
 
+          const data =
+            await response.json();
 
-const orderResponse =
-await fetch(
-"/api/create-order",
-{
 
-method: "POST",
+          if (
+            data.success &&
+            data.status === "PAID"
+          ) {
 
-headers: {
-"Content-Type":
-"application/json"
-},
+            showTicket(data);
 
-body:
-JSON.stringify(
-customerData
-)
+            return;
 
-}
-);
+          }
 
 
-const orderData =
-await orderResponse.json();
+          if (
+            data.success &&
+            data.status === "PENDING" &&
+            attempts < maxAttempts
+          ) {
 
+            showMessage(
+              "Payment is being confirmed. Please wait...",
+              "normal"
+            );
 
-if (
-!orderResponse.ok ||
-!orderData.success
-) {
+            setTimeout(
+              checkStatus,
+              3000
+            );
 
-throw new Error(
-orderData.error ||
-"Unable to create payment."
-);
+            return;
 
-}
+          }
 
 
-if (
-!orderData.paymentSessionId
-) {
+          if (
+            data.status === "FAILED"
+          ) {
 
-throw new Error(
-"Cashfree payment session was not created."
-);
+            showMessage(
+              "Payment could not be verified. Please contact the helpline if money was deducted.",
+              "error"
+            );
 
-}
+            paymentButton.disabled = false;
 
+            paymentButton.textContent =
+              "PROCEED TO PAYMENT";
 
-/* OPEN CASHFREE */
+            return;
 
-paymentButton.textContent =
-"OPENING PAYMENT...";
+          }
 
 
-const checkoutResult =
-await cashfree.checkout({
+          throw new Error(
+            data.error ||
+            "Unable to verify payment."
+          );
 
-paymentSessionId:
-orderData.paymentSessionId,
+        }
 
-redirectTarget:
-"_self"
+        catch (error) {
 
-});
+          console.error(
+            "Verification error:",
+            error
+          );
 
 
-if (
-checkoutResult &&
-checkoutResult.error
-) {
+          if (
+            attempts < maxAttempts
+          ) {
 
-console.error(
-"Cashfree checkout error:",
-checkoutResult.error
-);
+            showMessage(
+              "Confirming your payment...",
+              "normal"
+            );
 
-throw new Error(
-checkoutResult.error.message ||
-"Unable to open Cashfree checkout."
-);
+            setTimeout(
+              checkStatus,
+              3000
+            );
 
-}
+          }
 
-}
+          else {
 
-catch (error) {
+            showMessage(
+              "Payment verification is taking longer than expected. Please contact the helpline before making another payment.",
+              "error"
+            );
 
-console.error(
-"Payment error:",
-error
-);
+            paymentButton.disabled = false;
 
-alert(
-error.message ||
-"Something went wrong. Please try again."
-);
+            paymentButton.textContent =
+              "PROCEED TO PAYMENT";
 
-paymentButton.disabled =
-false;
+          }
 
-paymentButton.textContent =
-"CONTINUE TO PAYMENT";
+        }
 
-loadTicketCount();
+      }
 
-}
 
-});
+      checkStatus();
 
+    }
 
-/* INITIAL PRICE */
 
-updateTotal();
+    function showTicket(data) {
 
-</script>
+      const registration =
+        data.registration;
+
+
+      if (!registration) {
+
+        showMessage(
+          "Payment was verified, but registration details were not found.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "ticketName"
+      ).textContent =
+        registration.full_name || "";
+
+
+      document.getElementById(
+        "ticketRegNo"
+      ).textContent =
+        registration.student_reg_no || "";
+
+
+      document.getElementById(
+        "ticketQuantity"
+      ).textContent =
+        registration.quantity + " Ticket(s)";
+
+
+      document.getElementById(
+        "ticketAmount"
+      ).textContent =
+        "₹" + registration.amount;
+
+
+      document.getElementById(
+        "ticketId"
+      ).textContent =
+        "TICKET ID: " + data.ticketId;
+
+
+      const qrContainer =
+        document.getElementById(
+          "qrcode"
+        );
+
+
+      qrContainer.innerHTML = "";
+
+
+      if (
+        typeof QRCode !== "undefined" &&
+        data.qrToken
+      ) {
+
+        new QRCode(
+          qrContainer,
+          {
+            text:
+              data.qrToken,
+
+            width:
+              190,
+
+            height:
+              190,
+
+            correctLevel:
+              QRCode.CorrectLevel.H
+          }
+        );
+
+      }
+
+
+      ticketResult.style.display =
+        "block";
+
+
+      message.style.display =
+        "none";
+
+
+      ticketResult.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+
+      paymentButton.disabled = true;
+
+      paymentButton.textContent =
+        "PAYMENT COMPLETED";
+
+    }
+
+
+    updateTotal();
+
+    loadCount();
+
+    verifyReturnedPayment();
+
+  </script>
 
 </body>
 </html>
